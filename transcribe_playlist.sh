@@ -29,25 +29,29 @@ EOF
     exit 1
 }
 
-PLAYLIST_URL="${1:-}"
-LANG="${2:-en}"
-OUTDIR="${3:-transcripts}"
-COOKIES_ARG=""
-
-for arg in "$@"; do
-    case "$arg" in
+COOKIES_ARG=()
+while [ $# -gt 0 ]; do
+    case "$1" in
         --cookies-from-browser)
-            shift
-            BROWSER="${1:-}"
-            if [ -z "$BROWSER" ]; then
+            if [ -z "${2:-}" ]; then
                 echo "Error: --cookies-from-browser requires a browser name"
                 exit 1
             fi
-            COOKIES_ARG="--cookies-from-browser $BROWSER"
-            shift
+            COOKIES_ARG=(--cookies-from-browser "$2")
+            shift 2
+            ;;
+        --help|-h)
+            usage
+            ;;
+        *)
+            break
             ;;
     esac
 done
+
+PLAYLIST_URL="${1:-}"
+LANG="${2:-en}"
+OUTDIR="${3:-transcripts}"
 
 if [ -z "$PLAYLIST_URL" ]; then
     usage
@@ -56,8 +60,14 @@ fi
 mkdir -p "$OUTDIR"
 
 echo "Fetching playlist ..."
-VIDEO_IDS=$("$YT" $COOKIES_ARG --flat-playlist --print id "$PLAYLIST_URL")
+VIDEO_IDS=$("$YT" "${COOKIES_ARG[@]}" --flat-playlist --print id "$PLAYLIST_URL")
 TOTAL=$(echo "$VIDEO_IDS" | wc -l)
+
+if [ "$TOTAL" -eq 0 ]; then
+    echo "No videos found in playlist."
+    exit 0
+fi
+
 echo "Found $TOTAL video(s)"
 echo "Output dir: $OUTDIR/"
 echo "Language:   $LANG"
@@ -71,7 +81,7 @@ while IFS= read -r id; do
     COUNT=$((COUNT + 1))
     echo "[$COUNT/$TOTAL] $id"
 
-    if "$YT" $COOKIES_ARG --write-subs --sub-langs "$LANG" --skip-download \
+    if "$YT" "${COOKIES_ARG[@]}" --write-subs --sub-langs "$LANG" --skip-download \
         -o "$OUTDIR/%(id)s" \
         "https://www.youtube.com/watch?v=$id"; then
         echo "  OK"
