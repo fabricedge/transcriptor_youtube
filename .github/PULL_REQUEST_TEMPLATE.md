@@ -13,11 +13,11 @@ Fixes # (issue)
 
 ## How has this been tested?
 
-Please describe the tests that you ran to verify your changes.
+Please describe the tests you ran to verify your changes.
 
 ## Checklist:
 
 - [ ] My code follows the style guidelines of this project
-- [ ] I have performed a self-review of my own code
-- [ ] The script passes `shellcheck` without warnings
-- [ ] My changes generate no new warnings
+- [ ] I have run `go vet ./...` without warnings
+- [ ] The project builds successfully
+- [ ] I have tested against a real playlist

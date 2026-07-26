@@ -1,106 +1,93 @@
 # transcriptor_youtube
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![CI](https://github.com/fabricedge/transcriptor_youtube/actions/workflows/ci.yml/badge.svg)](https://github.com/fabricedge/transcriptor_youtube/actions/workflows/ci.yml)
 
 Download transcripts/subtitles for every video in a YouTube playlist.
 
-## Table of Contents
+A single static binary — no Python, no API key, no external dependencies.
 
-- [Requirements](#requirements)
-- [Setup](#setup)
-- [Usage](#usage)
-- [How it works](#how-it-works)
-- [Troubleshooting](#troubleshooting)
-- [Limitations](#limitations)
-- [License](#license)
+## Install
 
-## Requirements
-
-- **Python 3.8+**
-- **[yt-dlp](https://github.com/yt-dlp/yt-dlp)** — automatically handles YouTube's subtitle extraction and bypass mechanisms
-
-The script auto-detects a local `.venv` installation, making it easy to run in isolated environments.
-
-## Setup
+### From source
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install yt-dlp
+git clone https://github.com/fabricedge/transcriptor_youtube.git
+cd transcriptor_youtube
+go build -o yt-transcribe .
 ```
+
+### From release
+
+Download the pre-built binary for your platform from the [Releases page](https://github.com/fabricedge/transcriptor_youtube/releases).
 
 ## Usage
 
 ```bash
-./transcribe_playlist.sh <playlist-url> [language] [output-dir] [--cookies-from-browser BROWSER]
+./yt-transcribe [flags] <playlist-url>
 ```
 
-### Arguments
+### Flags
 
-| Argument | Description | Default |
+| Flag | Default | Description |
 |---|---|---|
-| `playlist-url` | YouTube playlist URL | **required** |
-| `language` | Subtitle language code | `en` |
-| `output-dir` | Output directory | `transcripts` |
-| `--cookies-from-browser BROWSER` | Use cookies from browser (firefox, chrome, chromium, brave, edge, opera, safari) | — |
+| `--lang` | `en` | Subtitle language code |
+| `--out` | `transcripts` | Output directory |
+| `--format` | `vtt` | Output format: `vtt`, `srt`, `txt` |
+| `--cookies` | — | Path to cookies.txt file |
+| `--help` | — | Show help |
 
 ### Examples
 
-Transcribe a playlist in English:
+Transcribe a playlist in English (VTT format):
 
 ```bash
-./transcribe_playlist.sh "https://www.youtube.com/playlist?list=PLabc123"
+./yt-transcribe "https://www.youtube.com/playlist?list=PLabc123"
 ```
 
-Transcribe in Portuguese:
+Transcribe in Portuguese as SRT:
 
 ```bash
-./transcribe_playlist.sh "https://www.youtube.com/playlist?list=PLabc123" pt-BR
+./yt-transcribe --lang pt-BR --format srt "https://www.youtube.com/playlist?list=PLabc123"
 ```
 
-Transcribe using Firefox cookies (bypasses IP bans and age-restricted videos):
+Transcribe using cookies (for age-restricted videos or to bypass rate limits):
 
 ```bash
-./transcribe_playlist.sh "https://www.youtube.com/playlist?list=PLabc123" en subs --cookies-from-browser firefox
+./yt-transcribe --cookies cookies.txt "https://www.youtube.com/playlist?list=PLabc123"
 ```
 
 ## How it works
 
-1. Lists all video IDs in the playlist using `yt-dlp --flat-playlist --print id`.
-2. Iterates over each video and downloads its subtitles with `--write-subs --skip-download`.
-3. Saves each transcript as a `.vtt` (WebVTT) file in the output directory, named by video ID.
+1. Fetches the playlist RSS feed (`youtube.com/feeds/videos.xml?playlist_id=...`) to list all video IDs.
+2. For each video, fetches the transcript via YouTube's InnerTube API using the `ANDROID`/`IOS` client (bypasses pot-token restrictions).
+3. Saves each transcript as a timed subtitle file.
 
-No video content is downloaded — only subtitle data.
+## Output formats
+
+- **vtt** — WebVTT (default, widely supported in HTML5 video players)
+- **srt** — SubRip (compatible with most media players)
+- **txt** — Plain text, one line per segment (best for LLMs and further processing)
 
 ## Troubleshooting
 
 ### "Sign in to confirm you're not a bot"
 
-YouTube is rate-limiting your IP. Pass your browser's cookies:
+Export cookies from your browser logged into YouTube and pass them:
 
 ```bash
-./transcribe_playlist.sh <playlist-url> --cookies-from-browser firefox
+# Export cookies in Netscape format (e.g., using cookies.txt extension)
+./yt-transcribe --cookies ~/cookies.txt "https://www.youtube.com/playlist?list=..."
 ```
 
-### "Could not retrieve a transcript"
+### No transcripts found
 
-The video may not have subtitles in the requested language. Try listing available languages first:
-
-```bash
-yt-dlp --list-subs "https://www.youtube.com/watch?v=VIDEO_ID"
-```
-
-### All downloads fail
-
-Your IP may be blocked. Use `--cookies-from-browser` with a browser logged into YouTube, or use a VPN/proxy.
+The video may not have captions in the requested language. Try a different language or check if the video has subtitles.
 
 ## Limitations
 
-- **Depends on YouTube's internal API** — yt-dlp and this script may break if YouTube changes its backend.
-- **No video content** — only subtitles are downloaded.
-- **Requires subtitles** — videos without captions (manual or auto-generated) will be skipped.
-- **JavaScript runtime warning** — yt-dlp may warn about missing JS runtimes; this does not affect subtitle downloads.
+- Playlists are limited to the first ~50 videos returned by the RSS feed.
+- Age-restricted videos may require cookies.
+- Depends on YouTube's internal API — may break if YouTube changes their endpoints.
 
 ## License
 

@@ -1,4 +1,7 @@
 .venv/
+test_out*/
+transcripts/
+yt-transcribe
 *.vtt
 *.srt
-transcripts/
+*.txt
