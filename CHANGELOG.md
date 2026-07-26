@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.0.1 — 2026-07-26
+
+### Added
+
+- Auto-rejoin URL arguments split by `&` when shell quoting is missing.
+- Accept bare playlist IDs and bare video IDs (no URL required).
+- MIT OpenCourseWare use case documentation.
+- CI and release GitHub Actions workflows.
+
+### Changed
+
+- Improved README with Windows download/run instructions.
+
 ## 2.0.0 — 2026-07-26
 
 ### Changed
