@@ -32,7 +32,7 @@ Download the pre-built binary for your platform from the [Releases page](https:/
 yt-transcribe [flags] <url>
 ```
 
-Accepts a playlist URL, a single video URL, or a bare video/playlist ID.
+Accepts a playlist URL, a single video URL, or a bare video/playlist ID — no quotes needed for `&` in URLs.
 
 ### Flags
 
@@ -64,6 +64,12 @@ Transcribe a single video:
 
 ```cmd
 yt-transcribe-windows-amd64.exe "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+```
+
+Transcribe using just the playlist ID (no quotes needed):
+
+```bash
+./yt-transcribe PLUl4u3cNGP63URZnh5iqBzDTDYPUTQT-8
 ```
 
 Transcribe in Portuguese as SRT:

@@ -25,17 +25,21 @@ func main() {
 	flag.StringVar(&format, "format", "vtt", "Output format (vtt, srt, txt)")
 	flag.StringVar(&cookies, "cookies", "", "Path to cookies.txt file")
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "Usage: yt-transcribe [flags] <playlist-url>\n\nFlags:\n")
+		fmt.Fprintf(os.Stderr, "Usage: yt-transcribe [flags] <url-or-id>\n\nAccepts a playlist URL, video URL, playlist ID, or video ID.\nIf the URL contains &, parts split by the shell are rejoined automatically.\n\nFlags:\n")
 		flag.PrintDefaults()
 	}
 	flag.Parse()
 
-	if flag.NArg() != 1 {
+	if flag.NArg() == 0 {
 		flag.Usage()
 		os.Exit(1)
 	}
 
-	arg := flag.Arg(0)
+	args := flag.Args()
+	arg := args[0]
+	if len(args) > 1 && strings.HasPrefix(arg, "http") {
+		arg = strings.Join(args, "&")
+	}
 
 	var videoIDs []string
 
