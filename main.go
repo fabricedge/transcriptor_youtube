@@ -35,20 +35,25 @@ func main() {
 		os.Exit(1)
 	}
 
-	playlistURL := flag.Arg(0)
-	playlistID := extractPlaylistID(playlistURL)
-	if playlistID == "" {
-		log.Fatalf("Could not extract playlist ID from: %s", playlistURL)
+	arg := flag.Arg(0)
+
+	var videoIDs []string
+
+	if playlistID, singleID := extractIDs(arg); playlistID != "" {
+		fmt.Printf("Fetching playlist %s ...\n", playlistID)
+		var err error
+		videoIDs, err = fetchPlaylist(playlistID)
+		if err != nil {
+			log.Fatalf("Failed to fetch playlist: %v", err)
+		}
+	} else if singleID != "" {
+		videoIDs = []string{singleID}
+	} else {
+		log.Fatalf("Could not extract video or playlist ID from: %s", arg)
 	}
 
 	if err := os.MkdirAll(outDir, 0755); err != nil {
 		log.Fatalf("Failed to create output directory: %v", err)
-	}
-
-	fmt.Printf("Fetching playlist %s ...\n", playlistID)
-	videoIDs, err := fetchPlaylist(playlistID)
-	if err != nil {
-		log.Fatalf("Failed to fetch playlist: %v", err)
 	}
 
 	if len(videoIDs) == 0 {
@@ -96,20 +101,36 @@ func main() {
 	fmt.Printf("Transcripts saved in: %s/\n", outDir)
 }
 
-func extractPlaylistID(url string) string {
-	url = strings.TrimSpace(url)
-	if !strings.HasPrefix(url, "http") {
-		return url
+func extractIDs(s string) (playlistID, videoID string) {
+	s = strings.TrimSpace(s)
+	if !strings.HasPrefix(s, "http") {
+		if len(s) == 11 {
+			return "", s
+		}
+		return s, ""
 	}
+
 	for _, prefix := range []string{"list=", "?list=", "&list="} {
-		i := strings.Index(url, prefix)
+		i := strings.Index(s, prefix)
 		if i >= 0 {
-			id := url[i+len(prefix):]
+			id := s[i+len(prefix):]
 			if amp := strings.IndexByte(id, '&'); amp >= 0 {
 				id = id[:amp]
 			}
-			return id
+			return id, ""
 		}
 	}
-	return ""
+
+	for _, prefix := range []string{"v=", "?v=", "&v="} {
+		i := strings.Index(s, prefix)
+		if i >= 0 {
+			id := s[i+len(prefix):]
+			if amp := strings.IndexByte(id, '&'); amp >= 0 {
+				id = id[:amp]
+			}
+			return "", id
+		}
+	}
+
+	return "", ""
 }

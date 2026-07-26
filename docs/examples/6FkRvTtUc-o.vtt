@@ -1,0 +1,5093 @@
+WEBVTT
+Kind: captions
+
+00:00:00.00 --> 00:00:01.98
+[SQUEAKING]
+
+00:00:01.98 --> 00:00:02.97
+[RUSTLING]
+
+00:00:02.97 --> 00:00:05.94
+[CLICKING]
+
+00:00:13.18 --> 00:00:15.60
+SARA BEERY: So why
+are we all here?
+
+00:00:15.60 --> 00:00:21.20
+Deep learning has clearly
+been exploding in society.
+
+00:00:21.20 --> 00:00:23.40
+Machine learning
+generally is something
+
+00:00:23.40 --> 00:00:28.04
+that, when I started studying it
+about 13 years ago, didn't work,
+
+00:00:28.04 --> 00:00:30.36
+and now it works.
+
+00:00:30.36 --> 00:00:35.36
+So how many of you here in this
+room used AI in the last week?
+
+00:00:35.36 --> 00:00:39.56
+Yeah, almost everybody,
+probably everybody.
+
+00:00:39.56 --> 00:00:43.92
+And we're seeing massive
+advances in everything from
+
+00:00:43.92 --> 00:00:49.94
+AI-assisted text generation
+to 3D reconstruction,
+
+00:00:49.94 --> 00:00:55.46
+things like NeRF, things like
+AlphaGo, generating images,
+
+00:00:55.46 --> 00:01:00.89
+helping with writing
+code, playing games.
+
+00:01:00.89 --> 00:01:03.85
+This has really started to
+touch almost every dimension
+
+00:01:03.85 --> 00:01:08.37
+of society, and it's definitely
+very exciting to see.
+
+00:01:08.37 --> 00:01:10.09
+And I think that
+hopefully, all of us
+
+00:01:10.09 --> 00:01:14.57
+will learn a lot more about
+what that means in this course.
+
+00:01:14.57 --> 00:01:17.01
+So what is deep learning?
+
+00:01:17.01 --> 00:01:22.25
+First, I would argue that
+one necessary component
+
+00:01:22.25 --> 00:01:25.29
+of deep learning is the
+idea of neural networks.
+
+00:01:25.29 --> 00:01:28.29
+And these are a class of
+machine learning architectures
+
+00:01:28.29 --> 00:01:31.49
+that basically use stacks
+of linear transformations
+
+00:01:31.49 --> 00:01:35.57
+interleaved with
+pointwise non-linearities.
+
+00:01:35.57 --> 00:01:39.33
+And these have really
+been a building block
+
+00:01:39.33 --> 00:01:43.09
+for a lot of the progress
+that we saw in the last slide.
+
+00:01:43.09 --> 00:01:45.65
+But the other really important
+dimension of deep learning
+
+00:01:45.65 --> 00:01:48.25
+is the idea of
+differential programming.
+
+00:01:48.25 --> 00:01:50.81
+And this is essentially
+a programming paradigm
+
+00:01:50.81 --> 00:01:53.81
+where we parameterize
+parts of the program
+
+00:01:53.81 --> 00:01:56.49
+and then let
+gradient-based optimization
+
+00:01:56.49 --> 00:01:59.51
+tune the parameters to
+basically optimize that program
+
+00:01:59.51 --> 00:02:04.19
+or find some of, at least,
+local optimal for that program.
+
+00:02:04.19 --> 00:02:06.51
+And these two things
+together is what
+
+00:02:06.51 --> 00:02:08.39
+we posit make up deep learning.
+
+00:02:08.39 --> 00:02:10.35
+And we're really going
+to dig into both of them
+
+00:02:10.35 --> 00:02:11.99
+in this course.
+
+00:02:11.99 --> 00:02:14.99
+So our philosophy for
+this is that breakthroughs
+
+00:02:14.99 --> 00:02:18.35
+in deep learning have been
+driven by a mixture of theory
+
+00:02:18.35 --> 00:02:20.71
+and practice, and
+both dimensions
+
+00:02:20.71 --> 00:02:24.67
+are really vital for future
+progress in the field.
+
+00:02:24.67 --> 00:02:27.19
+And so along those
+lines, this course
+
+00:02:27.19 --> 00:02:30.03
+should hopefully provide
+both a theoretical grounding
+
+00:02:30.03 --> 00:02:33.11
+in important deep
+learning building blocks,
+
+00:02:33.11 --> 00:02:37.39
+as well as give you practice
+implementing, understanding,
+
+00:02:37.39 --> 00:02:40.19
+and using those blocks.
+
+00:02:40.19 --> 00:02:42.27
+OK, there's still
+a lot of people
+
+00:02:42.27 --> 00:02:44.61
+in the back who are packed in.
+
+00:02:44.61 --> 00:02:47.51
+I don't know if there's any
+way to come further forward.
+
+00:02:47.51 --> 00:02:51.15
+If not, we'll do our best.
+
+00:02:51.15 --> 00:02:56.11
+So the class's coursework is
+going to be 65% problem sets.
+
+00:02:56.11 --> 00:02:57.29
+You'll have five psets.
+
+00:02:57.29 --> 00:02:59.92
+Each will be about
+one to two weeks long.
+
+00:02:59.92 --> 00:03:02.30
+And then there will be some
+combination of pen and paper
+
+00:03:02.30 --> 00:03:04.24
+or, more realistically,
+maybe Overleaf,
+
+00:03:04.24 --> 00:03:07.36
+as well as code that you
+will need to do and submit.
+
+00:03:07.36 --> 00:03:10.05
+And then 35% of the grade
+will be a final project.
+
+00:03:10.05 --> 00:03:11.60
+And this is a research
+project that's
+
+00:03:11.60 --> 00:03:13.88
+focused on deeper understanding
+of some of the topics
+
+00:03:13.88 --> 00:03:15.92
+that we cover in the course.
+
+00:03:15.92 --> 00:03:18.94
+You'll be asked to propose
+something for that project.
+
+00:03:18.94 --> 00:03:21.64
+So there'll be an
+initial project proposal.
+
+00:03:21.64 --> 00:03:24.20
+And then the final project
+will be a blog post
+
+00:03:24.20 --> 00:03:26.36
+that's going to demonstrate
+novel experimentation
+
+00:03:26.36 --> 00:03:27.68
+and visualization.
+
+00:03:27.68 --> 00:03:29.92
+And the hope here is
+that I don't know,
+
+00:03:29.92 --> 00:03:32.76
+many of you-- how many of you
+are machine learning researchers
+
+00:03:32.76 --> 00:03:35.16
+who have already written
+a machine learning paper,
+
+00:03:35.16 --> 00:03:37.58
+as first author, or
+anywhere on the author list?
+
+00:03:37.58 --> 00:03:39.41
+OK, so some.
+
+00:03:39.41 --> 00:03:41.58
+These days, when you write
+a machine learning paper,
+
+00:03:41.58 --> 00:03:43.04
+more often than
+not, you also have
+
+00:03:43.04 --> 00:03:45.32
+to write a blog post
+about that paper.
+
+00:03:45.32 --> 00:03:47.64
+And that's intended
+to be catchy, make
+
+00:03:47.64 --> 00:03:52.02
+people understand the material,
+but really get them engaged.
+
+00:03:52.02 --> 00:03:54.12
+And so one of the
+reasons that we have this
+
+00:03:54.12 --> 00:03:55.88
+as the format of
+our final project
+
+00:03:55.88 --> 00:03:59.25
+is to reflect on the fact that
+this is the reality we live
+
+00:03:59.25 --> 00:04:01.31
+in today, that in machine
+learning research,
+
+00:04:01.31 --> 00:04:05.45
+being able to write a blog-style
+description of the work
+
+00:04:05.45 --> 00:04:07.61
+that you're doing
+and not reduce any
+
+00:04:07.61 --> 00:04:09.97
+of the technical complexity
+or the information
+
+00:04:09.97 --> 00:04:13.13
+that's given across, but
+just do this in this slightly
+
+00:04:13.13 --> 00:04:15.81
+more visual and maybe
+even interactive format is
+
+00:04:15.81 --> 00:04:20.25
+a really valuable skill, and one
+that we hope this can help us
+
+00:04:20.25 --> 00:04:21.17
+think about.
+
+00:04:21.17 --> 00:04:25.85
+And we'll allow groups,
+but only up to two.
+
+00:04:25.85 --> 00:04:28.25
+And another
+important component--
+
+00:04:28.25 --> 00:04:29.99
+we are not able to
+provide compute.
+
+00:04:29.99 --> 00:04:32.99
+We may be able to provide
+some very limited compute,
+
+00:04:32.99 --> 00:04:34.57
+but that's TBD.
+
+00:04:34.57 --> 00:04:37.01
+So do not plan
+your final project
+
+00:04:37.01 --> 00:04:39.37
+to be something where you
+need to get state of the art
+
+00:04:39.37 --> 00:04:44.25
+by crunching a huge architecture
+on a bunch of huge data sets,
+
+00:04:44.25 --> 00:04:46.01
+because it's just
+not going to work.
+
+00:04:46.01 --> 00:04:48.41
+You're not going to be
+able to outcompete OpenAI
+
+00:04:48.41 --> 00:04:50.03
+on this research project.
+
+00:04:50.03 --> 00:04:50.53
+[LAUGHS]
+
+00:04:50.53 --> 00:04:54.77
+So this does not mean you
+can't do good research.
+
+00:04:54.77 --> 00:04:56.97
+And it's important
+to get creative here.
+
+00:04:56.97 --> 00:04:59.19
+And I think it's actually
+a really valuable skill,
+
+00:04:59.19 --> 00:05:03.03
+particularly as certain types of
+large-scale deep learning become
+
+00:05:03.03 --> 00:05:06.47
+more and more centralized, to
+think about how you can still do
+
+00:05:06.47 --> 00:05:09.83
+impactful machine learning
+research in a way that is not
+
+00:05:09.83 --> 00:05:13.23
+just "bigger is better."
+
+00:05:13.23 --> 00:05:18.07
+All right, any questions
+about coursework or logistics?
+
+00:05:18.07 --> 00:05:18.87
+Yeah.
+
+00:05:18.87 --> 00:05:20.79
+AUDIENCE: Is the
+final project expected
+
+00:05:20.79 --> 00:05:24.80
+to be a mix of practical
+and theoretical research?
+
+00:05:24.80 --> 00:05:27.39
+SARA BEERY: So the question was,
+is the final project expected
+
+00:05:27.39 --> 00:05:30.71
+to be a mix of practical
+and theoretical research?
+
+00:05:30.71 --> 00:05:32.29
+I think it depends.
+
+00:05:32.29 --> 00:05:35.59
+It depends on what you want to
+propose as your final project.
+
+00:05:35.59 --> 00:05:37.39
+But I think we're pretty open.
+
+00:05:37.39 --> 00:05:39.61
+What we want is for
+them to be innovative,
+
+00:05:39.61 --> 00:05:42.41
+but that innovation can
+be in an applied sense,
+
+00:05:42.41 --> 00:05:44.25
+or it can be in a more
+theoretical sense.
+
+00:05:44.25 --> 00:05:46.55
+OK, so I'm going to do a
+really high-level overview
+
+00:05:46.55 --> 00:05:50.67
+of the schedule, just to
+give you a rough sense.
+
+00:05:50.67 --> 00:05:53.96
+So today, we're really covering
+basic interest stuff-- course
+
+00:05:53.96 --> 00:05:57.76
+overview, a rough introduction
+to what neural networks are
+
+00:05:57.76 --> 00:05:59.60
+and basic building
+blocks, and, particularly
+
+00:05:59.60 --> 00:06:01.05
+in the context of
+signposting, what
+
+00:06:01.05 --> 00:06:03.56
+we expect you've seen before,
+because this is not an intro
+
+00:06:03.56 --> 00:06:04.66
+to deep learning class.
+
+00:06:04.66 --> 00:06:08.68
+This is advanced
+graduate-level deep learning.
+
+00:06:08.68 --> 00:06:12.04
+And then we're going to
+go into how you actually
+
+00:06:12.04 --> 00:06:14.80
+train a neural net,
+then approximation
+
+00:06:14.80 --> 00:06:17.36
+theory, some different
+architectures, things
+
+00:06:17.36 --> 00:06:19.96
+like grids, graphs.
+
+00:06:19.96 --> 00:06:22.64
+Then we'll hear from
+Jeremy about scaling rules
+
+00:06:22.64 --> 00:06:23.98
+for optimization.
+
+00:06:23.98 --> 00:06:26.72
+And then we'll look at
+generalization theory, more
+
+00:06:26.72 --> 00:06:29.04
+architectures, getting
+into transformers.
+
+00:06:29.04 --> 00:06:32.40
+We'll do a really fun lecture by
+Phil called the hacker's guide
+
+00:06:32.40 --> 00:06:35.40
+to deep learning that I
+think is quite useful.
+
+00:06:35.40 --> 00:06:37.44
+And then we'll
+talk about memory.
+
+00:06:37.44 --> 00:06:39.69
+And then we'll get into
+representation learning.
+
+00:06:39.69 --> 00:06:42.28
+So there, we're going to look
+at reconstruction based and then
+
+00:06:42.28 --> 00:06:45.56
+similarity based and then theory
+of representation learning.
+
+00:06:45.56 --> 00:06:48.46
+Then we'll have a little bit of
+a series on generative models,
+
+00:06:48.46 --> 00:06:51.52
+the basics, how representation
+learning interacts
+
+00:06:51.52 --> 00:06:53.61
+with generative
+modeling, thinking
+
+00:06:53.61 --> 00:06:55.44
+about conditional models.
+
+00:06:55.44 --> 00:06:57.69
+Then we'll talk about
+generalization, and particularly
+
+00:06:57.69 --> 00:06:59.81
+out-of-distribution
+generalization.
+
+00:06:59.81 --> 00:07:01.49
+We'll touch on
+transfer learning,
+
+00:07:01.49 --> 00:07:04.05
+both from a models and
+a data perspective.
+
+00:07:04.05 --> 00:07:06.52
+We'll hear about
+large language models.
+
+00:07:06.52 --> 00:07:09.15
+We'll have some guest lectures
+towards the end of the semester,
+
+00:07:09.15 --> 00:07:10.97
+and those are TBD.
+
+00:07:10.97 --> 00:07:14.01
+Then we'll hear about scaling
+laws, automatic gradient
+
+00:07:14.01 --> 00:07:16.06
+descent, and potentially
+the past and future
+
+00:07:16.06 --> 00:07:17.73
+of deep learning,
+though I think there's
+
+00:07:17.73 --> 00:07:19.73
+some discussion as to
+whether that's going
+
+00:07:19.73 --> 00:07:22.13
+to be a different lecture.
+
+00:07:22.13 --> 00:07:24.41
+And then, I think
+kind of importantly,
+
+00:07:24.41 --> 00:07:28.10
+right towards the end, we will
+have class-wide project office
+
+00:07:28.10 --> 00:07:29.81
+hours where we'll have
+a bunch of the TAs
+
+00:07:29.81 --> 00:07:31.49
+and the instructors
+all come, and we
+
+00:07:31.49 --> 00:07:36.13
+can do open discussion around
+projects before they're due.
+
+00:07:36.13 --> 00:07:40.33
+So the next thing is that we're
+going to host PyTorch tutorials.
+
+00:07:40.33 --> 00:07:43.05
+This is intended for if you're
+not familiar with PyTorch,
+
+00:07:43.05 --> 00:07:44.83
+and you think you
+need a refresher.
+
+00:07:44.83 --> 00:07:47.95
+And we strongly recommend
+that if this is the case,
+
+00:07:47.95 --> 00:07:50.37
+or if you even think it might
+be the case, that you attend
+
+00:07:50.37 --> 00:07:53.07
+one of the two PyTorch tutorials
+we're going to offer next week.
+
+00:07:53.07 --> 00:07:54.99
+So the question is if
+PyTorch is a requirement,
+
+00:07:54.99 --> 00:07:56.49
+or you're allowed to use
+any other frameworks.
+
+00:07:56.49 --> 00:07:58.83
+So you're probably welcome
+to use any other frameworks
+
+00:07:58.83 --> 00:08:01.15
+in your final project, but
+some of the problem sets
+
+00:08:01.15 --> 00:08:03.63
+specifically will
+have code that's
+
+00:08:03.63 --> 00:08:07.03
+already built into PyTorch, and
+you're filling parts of that in.
+
+00:08:07.03 --> 00:08:08.87
+So unless you want
+to rewrite all of it
+
+00:08:08.87 --> 00:08:11.85
+in JAX or something,
+which more power to you,
+
+00:08:11.85 --> 00:08:13.83
+I would recommend
+that you definitely
+
+00:08:13.83 --> 00:08:17.91
+make sure that you are
+familiar with PyTorch.
+
+00:08:17.91 --> 00:08:19.64
+OK.
+
+00:08:19.64 --> 00:08:21.69
+Cool, so I'm going to talk
+about course policies.
+
+00:08:21.69 --> 00:08:23.35
+And this stuff is important.
+
+00:08:23.35 --> 00:08:25.71
+And it's also all
+on the web page.
+
+00:08:25.71 --> 00:08:28.59
+But I think essentially,
+what we want to touch on
+
+00:08:28.59 --> 00:08:31.23
+is what our collaboration
+policy is first.
+
+00:08:31.23 --> 00:08:34.95
+So everyone is required to
+write an individual pset.
+
+00:08:34.95 --> 00:08:37.16
+So when you're actually
+working on your problem sets,
+
+00:08:37.16 --> 00:08:39.03
+do not work on something
+together and then
+
+00:08:39.03 --> 00:08:41.01
+both submit the
+exact same thing.
+
+00:08:41.01 --> 00:08:46.17
+You can work on the
+actual-- the content,
+
+00:08:46.17 --> 00:08:48.45
+you can discuss that with
+peers, TAs, and instructors,
+
+00:08:48.45 --> 00:08:49.95
+but the problem
+sets you submit need
+
+00:08:49.95 --> 00:08:53.08
+to be your own independent
+and individual work.
+
+00:08:53.08 --> 00:08:55.74
+And that also applies to
+the code that you write.
+
+00:08:55.74 --> 00:08:57.42
+So you can discuss
+the code with others,
+
+00:08:57.42 --> 00:08:59.86
+but you need to each write
+your own code separately.
+
+00:08:59.86 --> 00:09:01.86
+There was some confusion
+about this in the past.
+
+00:09:01.86 --> 00:09:04.76
+Just make sure that you're not
+taking the code someone else
+
+00:09:04.76 --> 00:09:08.68
+wrote, running it, and then
+submitting a pset on it.
+
+00:09:08.68 --> 00:09:11.80
+You should absolutely not copy
+or share complete solutions,
+
+00:09:11.80 --> 00:09:14.64
+and you also should not
+ask someone else, hey, this
+
+00:09:14.64 --> 00:09:16.64
+is my solution, is it right?
+
+00:09:16.64 --> 00:09:18.14
+And you shouldn't
+do that in person,
+
+00:09:18.14 --> 00:09:20.20
+and you also
+shouldn't ask, Is this
+
+00:09:20.20 --> 00:09:22.52
+correct? on Piazza or Canvas.
+
+00:09:22.52 --> 00:09:24.66
+So again, the idea is,
+it's your independent work,
+
+00:09:24.66 --> 00:09:26.56
+your independent thought.
+
+00:09:26.56 --> 00:09:29.44
+And I think it matters more that
+you've gone through that process
+
+00:09:29.44 --> 00:09:31.72
+independently than
+actually getting it correct
+
+00:09:31.72 --> 00:09:34.69
+because you'll learn from
+the feedback on your psets
+
+00:09:34.69 --> 00:09:37.24
+better if you submit something
+that you came up with yourself
+
+00:09:37.24 --> 00:09:41.32
+and get feedback on it
+than if you copy somebody.
+
+00:09:41.32 --> 00:09:44.11
+And then if you work with anyone
+on the pset other than TAs
+
+00:09:44.11 --> 00:09:46.20
+and instructors, we ask
+that you write their names
+
+00:09:46.20 --> 00:09:47.10
+at the top of the pset.
+
+00:09:47.10 --> 00:09:49.02
+So if you have a study group,
+you're all working together--
+
+00:09:49.02 --> 00:09:50.60
+we don't care if
+this is 10 people.
+
+00:09:50.60 --> 00:09:52.96
+We don't care if it's, in
+this class, 100 people.
+
+00:09:52.96 --> 00:09:55.18
+But we just want to know
+who was working together.
+
+00:09:55.18 --> 00:09:58.58
+I'd be impressed if you managed
+to come up with a 100-person
+
+00:09:58.58 --> 00:10:00.98
+collaborative group.
+
+00:10:00.98 --> 00:10:06.18
+So AI assistance-- we
+take the exact same policy
+
+00:10:06.18 --> 00:10:08.90
+about things like ChatGPT
+or other AI assistants
+
+00:10:08.90 --> 00:10:10.74
+that we do with humans.
+
+00:10:10.74 --> 00:10:13.00
+So it's a deep learning class.
+
+00:10:13.00 --> 00:10:16.38
+You should be trying out
+the latest technology.
+
+00:10:16.38 --> 00:10:17.90
+The idea is not
+that we're teaching
+
+00:10:17.90 --> 00:10:20.54
+you to ignore what's happening.
+
+00:10:20.54 --> 00:10:25.32
+But we do want you to treat
+them like a human collaborator.
+
+00:10:25.32 --> 00:10:27.72
+Don't ask them to answer
+the question for you.
+
+00:10:27.72 --> 00:10:31.02
+Just try to imagine from
+an ethics perspective
+
+00:10:31.02 --> 00:10:33.46
+that this is like a
+peer in the class.
+
+00:10:33.46 --> 00:10:35.40
+So don't say, what is
+the solution to this?
+
+00:10:35.40 --> 00:10:36.94
+Don't say, write
+the code for me,
+
+00:10:36.94 --> 00:10:38.52
+because you wouldn't
+go to your friend
+
+00:10:38.52 --> 00:10:41.14
+and say, please
+write my code for me.
+
+00:10:41.14 --> 00:10:45.84
+But you're super welcome to use
+them as a discussion partner.
+
+00:10:45.84 --> 00:10:49.00
+Ask them questions
+that are contextual.
+
+00:10:49.00 --> 00:10:50.29
+Go back and forth.
+
+00:10:50.29 --> 00:10:51.07
+That's all fine.
+
+00:10:51.07 --> 00:10:56.15
+But don't treat AI
+collaboration as if they're not
+
+00:10:56.15 --> 00:10:57.35
+a human collaborator.
+
+00:10:57.35 --> 00:10:58.67
+Think of it that way first.
+
+00:10:58.67 --> 00:11:02.39
+Is this something I would
+ask my friend in the class?
+
+00:11:02.39 --> 00:11:04.35
+And then just like you
+can come to office hours
+
+00:11:04.35 --> 00:11:06.85
+and ask a human questions
+about the lecture
+
+00:11:06.85 --> 00:11:09.03
+material, clarifications
+about questions, tips
+
+00:11:09.03 --> 00:11:11.31
+for getting started, you're
+welcome to do the same
+
+00:11:11.31 --> 00:11:13.59
+with AI assistants.
+
+00:11:13.59 --> 00:11:16.15
+Again, you're not allowed
+to ask an expert friend
+
+00:11:16.15 --> 00:11:17.43
+to do your homework for you.
+
+00:11:17.43 --> 00:11:21.11
+Don't ask AI to do
+your homework for you.
+
+00:11:21.11 --> 00:11:24.47
+If you're ever unclear,
+imagine the AI is a human
+
+00:11:24.47 --> 00:11:26.51
+and apply that same norm.
+
+00:11:26.51 --> 00:11:30.45
+And if you work with any AI on
+a pset, similarly to the fact
+
+00:11:30.45 --> 00:11:31.83
+that we're writing
+with humans we
+
+00:11:31.83 --> 00:11:34.67
+collaborated with, please
+write down which AI
+
+00:11:34.67 --> 00:11:36.31
+and how you used it.
+
+00:11:36.31 --> 00:11:38.89
+And, of course, this is
+a bit vague, but again,
+
+00:11:38.89 --> 00:11:41.79
+just kind of honor code.
+
+00:11:41.79 --> 00:11:45.15
+Any questions about
+AI collaboration,
+
+00:11:45.15 --> 00:11:48.52
+or is that reasonably clear?
+
+00:11:48.52 --> 00:11:49.22
+Yeah.
+
+00:11:49.22 --> 00:11:51.38
+AUDIENCE: I had a
+question on the last page.
+
+00:11:51.38 --> 00:11:55.05
+So can we show our work
+to the TAs to [INAUDIBLE]?
+
+00:11:55.05 --> 00:11:55.72
+SARA BEERY: Yes.
+
+00:11:55.72 --> 00:11:58.78
+You're very welcome to
+show your work to the TAs.
+
+00:11:58.78 --> 00:12:00.16
+The TAs are not
+going to tell you
+
+00:12:00.16 --> 00:12:01.61
+how to answer the
+question, though,
+
+00:12:01.61 --> 00:12:05.12
+but they will work with you to
+help you hopefully figure it out
+
+00:12:05.12 --> 00:12:06.48
+on your own.
+
+00:12:06.48 --> 00:12:07.92
+Why are we here?
+
+00:12:07.92 --> 00:12:10.88
+[LAUGHS] What's the goal?
+
+00:12:10.88 --> 00:12:12.64
+So what do we want to do?
+
+00:12:12.64 --> 00:12:17.64
+Why are we all interested in
+things like deep learning?
+
+00:12:17.64 --> 00:12:20.68
+One perspective is that
+we're interested in modeling
+
+00:12:20.68 --> 00:12:24.32
+complex phenomena
+in the real world.
+
+00:12:24.32 --> 00:12:26.40
+What are complex phenomena?
+
+00:12:26.40 --> 00:12:28.22
+Well, you interact
+with them every day,
+
+00:12:28.22 --> 00:12:30.80
+things like natural
+language, images,
+
+00:12:30.80 --> 00:12:33.56
+or visual data in
+general, videos.
+
+00:12:33.56 --> 00:12:37.14
+DNA, ecosystems are
+complex phenomena.
+
+00:12:37.14 --> 00:12:40.28
+Climate change is a
+complex phenomenon.
+
+00:12:40.28 --> 00:12:44.72
+Why is it hard to model complex
+phenomena in the real world?
+
+00:12:44.72 --> 00:12:46.32
+They're complex.
+
+00:12:46.32 --> 00:12:51.30
+[LAUGHS] And so maybe
+one existence proof
+
+00:12:51.30 --> 00:12:54.74
+for deep learning as a solution
+to modeling complex phenomena--
+
+00:12:54.74 --> 00:12:57.16
+possibly, we could talk
+about the human brain.
+
+00:12:57.16 --> 00:12:59.21
+All of you are
+here at MIT, which
+
+00:12:59.21 --> 00:13:01.46
+means you're pretty good at
+modeling complex phenomena
+
+00:13:01.46 --> 00:13:02.88
+in your brain, I'm guessing.
+
+00:13:05.66 --> 00:13:10.78
+So first, today, I'm going
+to just briefly go over
+
+00:13:10.78 --> 00:13:12.24
+how we got where we are today.
+
+00:13:12.24 --> 00:13:15.14
+This is a brief history
+of the field of AI,
+
+00:13:15.14 --> 00:13:17.06
+deep learning in general.
+
+00:13:17.06 --> 00:13:19.14
+And then I'm going to
+go over what we expect
+
+00:13:19.14 --> 00:13:21.10
+you have already seen before.
+
+00:13:21.10 --> 00:13:23.24
+It's OK if you haven't
+seen these things before,
+
+00:13:23.24 --> 00:13:26.50
+but we would expect you then
+to go and brush up on them.
+
+00:13:26.50 --> 00:13:28.94
+So if there's anything that I
+talk about, and you're like,
+
+00:13:28.94 --> 00:13:31.64
+oh, I have never seen
+that, we expect that.
+
+00:13:31.64 --> 00:13:34.70
+That's something you can go look
+at some of the OpenCourseWare
+
+00:13:34.70 --> 00:13:39.18
+courses at MIT, go find lots of
+resources online, and pick it up
+
+00:13:39.18 --> 00:13:40.90
+before you go into this class.
+
+00:13:40.90 --> 00:13:42.82
+And then I'll also talk
+about what we actually
+
+00:13:42.82 --> 00:13:45.19
+cover in the class.
+
+00:13:45.19 --> 00:13:47.29
+So a brief history
+of neural networks--
+
+00:13:47.29 --> 00:13:49.83
+and I think a fun way
+to go through this
+
+00:13:49.83 --> 00:13:52.79
+is looking at this on
+a plot of enthusiasm
+
+00:13:52.79 --> 00:13:55.03
+for neural networks over time.
+
+00:13:55.03 --> 00:13:58.99
+So if we go way back
+to 1958, Rosenblatt
+
+00:13:58.99 --> 00:14:04.27
+introduced the perceptron
+in Psychological Review.
+
+00:14:04.27 --> 00:14:09.75
+And the perceptron was the
+first neural network, arguably.
+
+00:14:09.75 --> 00:14:11.31
+And what this was
+intending to do
+
+00:14:11.31 --> 00:14:15.79
+was recognize or
+categorize images.
+
+00:14:15.79 --> 00:14:18.55
+And the idea was
+essentially that you
+
+00:14:18.55 --> 00:14:22.59
+could take some combination
+of representations--
+
+00:14:22.59 --> 00:14:25.39
+in this case,
+particularly pixels--
+
+00:14:25.39 --> 00:14:28.31
+sum them, put them through
+some non-linearity,
+
+00:14:28.31 --> 00:14:30.91
+and get out a categorization.
+
+00:14:30.91 --> 00:14:32.99
+And really, we'll see
+throughout the course
+
+00:14:32.99 --> 00:14:37.43
+and even today, this idea
+still forms the building block
+
+00:14:37.43 --> 00:14:39.61
+for most of the deep
+learning that we do.
+
+00:14:39.61 --> 00:14:42.83
+And these perceptrons
+are components
+
+00:14:42.83 --> 00:14:44.80
+in many, many, many
+different types
+
+00:14:44.80 --> 00:14:48.00
+of capacities within
+things like ChatGPT.
+
+00:14:48.00 --> 00:14:50.74
+When this paper came
+out back in 1958,
+
+00:14:50.74 --> 00:14:52.68
+people were incredibly
+enthusiastic.
+
+00:14:52.68 --> 00:14:55.80
+It made waves.
+
+00:14:55.80 --> 00:15:00.00
+And then in 1972,
+Minsky and Papert
+
+00:15:00.00 --> 00:15:03.88
+wrote a book called
+Perceptrons, Expanded Edition.
+
+00:15:03.88 --> 00:15:07.28
+And this book takes a very
+critical lens to the idea
+
+00:15:07.28 --> 00:15:09.48
+that a perceptron could
+be seriously considered
+
+00:15:09.48 --> 00:15:10.88
+a model of the brain.
+
+00:15:10.88 --> 00:15:14.56
+And it also carefully and
+mathematically describes
+
+00:15:14.56 --> 00:15:16.72
+and characterizes
+the limitations
+
+00:15:16.72 --> 00:15:19.28
+of what a perceptron can model.
+
+00:15:19.28 --> 00:15:22.60
+And it did so, so
+carefully and so critically
+
+00:15:22.60 --> 00:15:26.40
+that all of a sudden, enthusiasm
+for machine learning really
+
+00:15:26.40 --> 00:15:27.68
+took a dip.
+
+00:15:27.68 --> 00:15:32.72
+So in the '70s, we were not
+excited about neural networks.
+
+00:15:32.72 --> 00:15:37.88
+But then in 1986, this book came
+out called Parallel Distributed
+
+00:15:37.88 --> 00:15:38.84
+Processing.
+
+00:15:38.84 --> 00:15:42.16
+And this was fundamental
+because it introduces
+
+00:15:42.16 --> 00:15:45.10
+the concept of backpropagation.
+
+00:15:45.10 --> 00:15:47.02
+And this was really
+the thing that
+
+00:15:47.02 --> 00:15:49.78
+enabled multilayer
+perceptrons, so not just
+
+00:15:49.78 --> 00:15:51.46
+a single perceptron,
+but actually
+
+00:15:51.46 --> 00:15:54.54
+multiple perceptrons
+stacked on top of each other
+
+00:15:54.54 --> 00:15:57.86
+to actually be reasonably
+trained, reasonably fit,
+
+00:15:57.86 --> 00:16:00.18
+this concept of being
+able to backpropagate
+
+00:16:00.18 --> 00:16:03.58
+a gradient through multiple
+layers of perceptrons.
+
+00:16:03.58 --> 00:16:05.46
+And what this
+enabled you to solve
+
+00:16:05.46 --> 00:16:07.79
+were things like
+the XOR problem.
+
+00:16:07.79 --> 00:16:09.46
+For the first time,
+you could reasonably
+
+00:16:09.46 --> 00:16:11.14
+solve categorization
+problems that
+
+00:16:11.14 --> 00:16:14.66
+were not separable from
+a linear classifier.
+
+00:16:14.66 --> 00:16:16.98
+They pointed to backpropagation
+as a breakthrough.
+
+00:16:16.98 --> 00:16:20.58
+It led us actually
+handle things where
+
+00:16:20.58 --> 00:16:25.82
+you need multiple different
+boundaries and these nonlinear
+
+00:16:25.82 --> 00:16:28.58
+boundaries to be drawn,
+which is only possible if you
+
+00:16:28.58 --> 00:16:30.54
+have multiple layers
+of a perceptron.
+
+00:16:30.54 --> 00:16:32.82
+You'll never be able
+to solve the XOR
+
+00:16:32.82 --> 00:16:36.62
+problem with a single-layer
+neural network.
+
+00:16:36.62 --> 00:16:38.86
+And everyone got
+really excited again.
+
+00:16:38.86 --> 00:16:42.57
+So in the '80s, yet again,
+machine learning was something
+
+00:16:42.57 --> 00:16:44.95
+that people were pumped about,
+and particularly this deep
+
+00:16:44.95 --> 00:16:48.19
+learning neural network
+perspective on machine learning.
+
+00:16:48.19 --> 00:16:54.15
+In 1998, Yann LeCun put out
+convolutional neural networks.
+
+00:16:54.15 --> 00:16:56.83
+There's an awesome demo
+that he has on his web page.
+
+00:16:56.83 --> 00:17:00.27
+I'm sure many of you
+have heard of Yann LeCun.
+
+00:17:00.27 --> 00:17:04.39
+And this seems
+like it would mean
+
+00:17:04.39 --> 00:17:07.75
+that everyone was really excited
+about neural networks again.
+
+00:17:07.75 --> 00:17:11.06
+But if you go to
+NeurIPS in 2000,
+
+00:17:11.06 --> 00:17:14.31
+this is the premier conference
+on machine learning.
+
+00:17:14.31 --> 00:17:16.39
+It evolved from an
+interdisciplinary conference,
+
+00:17:16.39 --> 00:17:22.47
+which was on basically
+the science of the brain
+
+00:17:22.47 --> 00:17:25.71
+and machine learning to
+specifically just a machine
+
+00:17:25.71 --> 00:17:27.10
+learning conference.
+
+00:17:27.10 --> 00:17:31.51
+If you look at that
+conference in 2000,
+
+00:17:31.51 --> 00:17:35.03
+the most predictive words
+in papers in the title
+
+00:17:35.03 --> 00:17:39.55
+for acceptance were "belief
+propagation" and "Gaussian."
+
+00:17:39.55 --> 00:17:43.08
+And the title words most
+predictive of paper rejection
+
+00:17:43.08 --> 00:17:45.72
+were "neural" and "network."
+
+00:17:45.72 --> 00:17:47.08
+[LAUGHTER]
+
+00:17:47.08 --> 00:17:49.94
+So this is what we
+called the AI winter.
+
+00:17:49.94 --> 00:17:51.44
+And one of the
+reasons it was called
+
+00:17:51.44 --> 00:17:54.06
+the AI winter is because even
+though we had the theory,
+
+00:17:54.06 --> 00:17:56.52
+we had the building
+blocks, we didn't actually
+
+00:17:56.52 --> 00:18:01.96
+have the ability to
+train them efficiently.
+
+00:18:01.96 --> 00:18:04.56
+We didn't have the right
+programming perspective,
+
+00:18:04.56 --> 00:18:07.68
+and we didn't have
+the right hardware.
+
+00:18:07.68 --> 00:18:12.80
+But then in 2012, Alex
+Krizhevsky and his co-authors
+
+00:18:12.80 --> 00:18:14.36
+published AlexNet.
+
+00:18:14.36 --> 00:18:20.04
+And AlexNet was also another
+convolutional neural network.
+
+00:18:20.04 --> 00:18:24.60
+But importantly, Alex Krizhevsky
+was a brilliant programmer,
+
+00:18:24.60 --> 00:18:26.32
+and Alex Krizhevsky
+figured out how
+
+00:18:26.32 --> 00:18:29.24
+to program GPUs, graphics
+processing units, that
+
+00:18:29.24 --> 00:18:33.12
+have been developed to
+handle massive-scale parallel
+
+00:18:33.12 --> 00:18:37.96
+multiplications for
+graphics, for video games,
+
+00:18:37.96 --> 00:18:44.10
+and for high-resolution images.
+
+00:18:44.10 --> 00:18:46.46
+But he figured out how to
+program those and repurposed
+
+00:18:46.46 --> 00:18:50.22
+that hardware for the
+training of neural networks.
+
+00:18:50.22 --> 00:18:53.66
+And I can't tell you how much
+of a shot heard around the world
+
+00:18:53.66 --> 00:18:55.54
+this was in our field.
+
+00:18:55.54 --> 00:18:59.94
+But this, for the first
+time, outperformed
+
+00:18:59.94 --> 00:19:03.42
+every single other
+possible method
+
+00:19:03.42 --> 00:19:06.78
+that was out there on ImageNet.
+
+00:19:06.78 --> 00:19:09.38
+ImageNet-- how many of you
+have heard of ImageNet?
+
+00:19:09.38 --> 00:19:10.34
+Yeah.
+
+00:19:10.34 --> 00:19:12.80
+ImageNet was the first
+very large-scale data
+
+00:19:12.80 --> 00:19:14.06
+set of its kind.
+
+00:19:14.06 --> 00:19:16.18
+And I actually
+think that this is
+
+00:19:16.18 --> 00:19:18.26
+an important
+component, what made
+
+00:19:18.26 --> 00:19:20.14
+machine learning start to work.
+
+00:19:20.14 --> 00:19:22.16
+And I would argue
+that, of course,
+
+00:19:22.16 --> 00:19:25.76
+it was the theory
+and the programming,
+
+00:19:25.76 --> 00:19:29.30
+the ability to actually
+efficiently fit these things.
+
+00:19:29.30 --> 00:19:33.90
+But the other really vital
+component was the data.
+
+00:19:33.90 --> 00:19:37.36
+Machine learning does not work
+without large-scale, curated,
+
+00:19:37.36 --> 00:19:40.60
+labeled data in many
+capacities still,
+
+00:19:40.60 --> 00:19:42.19
+though we're getting
+better and better
+
+00:19:42.19 --> 00:19:44.15
+at self-supervised learning.
+
+00:19:44.15 --> 00:19:48.91
+But so all of a
+sudden, we were back.
+
+00:19:48.91 --> 00:19:50.45
+Everyone was enthusiastic again.
+
+00:19:50.45 --> 00:19:52.47
+And actually, if
+you look, these were
+
+00:19:52.47 --> 00:19:56.11
+hype cycles of about
+28 years, both of them.
+
+00:19:56.11 --> 00:20:00.99
+And so the question is, where
+are we going to be in 2028?
+
+00:20:00.99 --> 00:20:04.35
+So it's 2024 now.
+
+00:20:04.35 --> 00:20:08.03
+It's 2024, so in four years,
+where are we going to be?
+
+00:20:08.03 --> 00:20:11.61
+So one argument would be, OK,
+we're in another hype cycle.
+
+00:20:11.61 --> 00:20:15.03
+But I would actually argue
+that that's probably not true.
+
+00:20:15.03 --> 00:20:17.99
+Another one would be
+that we're just way
+
+00:20:17.99 --> 00:20:19.85
+off the deep end in
+terms of enthusiasm,
+
+00:20:19.85 --> 00:20:23.83
+and by 2028, we'll be in
+some-- out in the stratosphere.
+
+00:20:23.83 --> 00:20:26.71
+Or possibly we're doing
+something like this.
+
+00:20:26.71 --> 00:20:28.43
+Maybe in 2028,
+we're going to hit
+
+00:20:28.43 --> 00:20:31.45
+some new plane of
+enthusiasm, and then
+
+00:20:31.45 --> 00:20:32.91
+we'll start to
+realize limitations,
+
+00:20:32.91 --> 00:20:34.35
+and we'll oscillate again.
+
+00:20:34.35 --> 00:20:35.69
+Yeah?
+
+00:20:35.69 --> 00:20:38.34
+AUDIENCE: Could AI take
+over society by 2028?
+
+00:20:38.34 --> 00:20:39.84
+SARA BEERY: [LAUGHS]
+So the question
+
+00:20:39.84 --> 00:20:42.64
+is, will AI take
+over society by 2028?
+
+00:20:42.64 --> 00:20:44.56
+My answer is, let's see.
+
+00:20:44.56 --> 00:20:46.16
+[LAUGHS]
+
+00:20:46.16 --> 00:20:47.80
+So what's deep learning today?
+
+00:20:47.80 --> 00:20:51.56
+What are the components
+that make it up?
+
+00:20:51.56 --> 00:20:55.08
+First, I think a really
+important one is Autograd.
+
+00:20:55.08 --> 00:20:58.44
+These are coding languages
+like PyTorch and TensorFlow
+
+00:20:58.44 --> 00:21:00.32
+that give us a really
+clever way to do things
+
+00:21:00.32 --> 00:21:04.04
+like implement the chain
+rule in software, making
+
+00:21:04.04 --> 00:21:06.48
+good use of available hardware.
+
+00:21:06.48 --> 00:21:09.42
+And this has enabled
+us to do things
+
+00:21:09.42 --> 00:21:11.94
+like approximate the
+gradient of any function,
+
+00:21:11.94 --> 00:21:14.08
+even if it's an approximation.
+
+00:21:14.08 --> 00:21:17.14
+These are a really important
+component of deep learning.
+
+00:21:17.14 --> 00:21:19.38
+And if you do anything
+with deep learning,
+
+00:21:19.38 --> 00:21:21.30
+I doubt that you're doing
+what Krizhevsky did.
+
+00:21:21.30 --> 00:21:23.26
+I doubt that you're programming
+these things from scratch.
+
+00:21:23.26 --> 00:21:25.63
+You're almost certainly working
+with existing programming
+
+00:21:25.63 --> 00:21:28.64
+languages that are built
+for machine learning.
+
+00:21:28.64 --> 00:21:32.67
+Its billion-plus data point
+datasets, things like LAION.
+
+00:21:32.67 --> 00:21:34.72
+So that scale of data that
+I talked about before,
+
+00:21:34.72 --> 00:21:37.74
+this is an incredibly important
+component of all of this.
+
+00:21:37.74 --> 00:21:41.82
+Parallel training on
+thousands of GPUs--
+
+00:21:41.82 --> 00:21:45.06
+again, this is what
+we're looking at today--
+
+00:21:45.06 --> 00:21:46.92
+billion-plus parameter
+architectures,
+
+00:21:46.92 --> 00:21:51.02
+and this number just keeps
+increasing, million-plus
+
+00:21:51.02 --> 00:21:52.90
+dollar training costs.
+
+00:21:52.90 --> 00:21:55.30
+So, of course, it's
+not public knowledge
+
+00:21:55.30 --> 00:21:57.98
+how much it costs to train
+something like GPT 4.0.
+
+00:21:57.98 --> 00:22:03.90
+But I would bet it's definitely
+in the many millions.
+
+00:22:03.90 --> 00:22:06.46
+Shockingly good results-- I
+don't know about any of you.
+
+00:22:06.46 --> 00:22:08.80
+I mean, I've been working in
+this field now for a while,
+
+00:22:08.80 --> 00:22:13.38
+and I think we've been seeing
+results recently that I didn't
+
+00:22:13.38 --> 00:22:16.86
+anticipate seeing in my lifetime
+from when I started, back when
+
+00:22:16.86 --> 00:22:18.38
+things didn't work.
+
+00:22:18.38 --> 00:22:20.36
+So that's been both
+exciting to see,
+
+00:22:20.36 --> 00:22:23.37
+and also sometimes, I think, for
+many of us a bit overwhelming,
+
+00:22:23.37 --> 00:22:25.58
+because you're like, oh,
+gosh, the problems I thought
+
+00:22:25.58 --> 00:22:27.54
+were problems aren't
+problems anymore.
+
+00:22:27.54 --> 00:22:29.58
+So what are the problems?
+
+00:22:29.58 --> 00:22:33.18
+Of course, I work
+in the world of--
+
+00:22:33.18 --> 00:22:36.71
+I work a lot on
+biodiversity loss
+
+00:22:36.71 --> 00:22:38.42
+at a global scale
+using machine learning.
+
+00:22:38.42 --> 00:22:40.59
+And I would say that
+biodiversity loss is definitely
+
+00:22:40.59 --> 00:22:43.04
+still a problem, and one that
+machine learning is sometimes
+
+00:22:43.04 --> 00:22:46.63
+helping, but often also
+hurting, because the carbon
+
+00:22:46.63 --> 00:22:52.03
+costs of actually training
+these models is significant.
+
+00:22:52.03 --> 00:22:56.25
+But all of these
+massive things-- massive
+
+00:22:56.25 --> 00:22:57.31
+isn't necessary.
+
+00:22:57.31 --> 00:22:59.95
+So things like Stable Diffusion
+are actually pretty lightweight
+
+00:22:59.95 --> 00:23:01.89
+and were incredibly impactful.
+
+00:23:01.89 --> 00:23:06.15
+So things don't always
+need to be big to be good.
+
+00:23:06.15 --> 00:23:08.39
+And then I think another
+really important component
+
+00:23:08.39 --> 00:23:11.51
+of deep learning today is
+the idea that it is primarily
+
+00:23:11.51 --> 00:23:13.59
+an open source
+community where we have
+
+00:23:13.59 --> 00:23:15.99
+what we call modular reuse.
+
+00:23:15.99 --> 00:23:19.75
+So people take weights that were
+trained by one person with one
+
+00:23:19.75 --> 00:23:20.37
+architecture.
+
+00:23:20.37 --> 00:23:22.87
+They might take that and use
+that entire thing as a module
+
+00:23:22.87 --> 00:23:24.99
+within another,
+larger system that
+
+00:23:24.99 --> 00:23:27.23
+has many different
+components that are being
+
+00:23:27.23 --> 00:23:29.67
+pulled from different things.
+
+00:23:29.67 --> 00:23:32.44
+Now, I think that this open
+source perspective is really
+
+00:23:32.44 --> 00:23:35.03
+something that's driven a lot
+of progress in machine learning.
+
+00:23:35.03 --> 00:23:36.44
+But also one of
+the things that we
+
+00:23:36.44 --> 00:23:38.85
+have been seeing in
+the last few years
+
+00:23:38.85 --> 00:23:42.65
+is that things are less and
+less likely to be open source.
+
+00:23:42.65 --> 00:23:45.13
+You might have an API,
+but you aren't necessarily
+
+00:23:45.13 --> 00:23:47.93
+going to get the weights and
+the architecture for something
+
+00:23:47.93 --> 00:23:50.77
+like GPT 4.0.
+
+00:23:50.77 --> 00:23:53.41
+So for the rest of
+the lecture, this
+
+00:23:53.41 --> 00:23:55.57
+is the signposting
+I'm going to use.
+
+00:23:55.57 --> 00:23:58.79
+Looking back, this is what
+we expect you've seen before.
+
+00:23:58.79 --> 00:24:00.17
+The green looking
+forward, that's
+
+00:24:00.17 --> 00:24:02.17
+what we're going to
+cover in this class.
+
+00:24:02.17 --> 00:24:05.17
+All right, pretty
+straightforward.
+
+00:24:05.17 --> 00:24:07.33
+I expect you have
+seen gradient descent
+
+00:24:07.33 --> 00:24:09.97
+before you come to this class.
+
+00:24:09.97 --> 00:24:13.45
+So gradient descent
+essentially is the idea
+
+00:24:13.45 --> 00:24:17.93
+that we're trying to
+optimize some cost function.
+
+00:24:17.93 --> 00:24:19.73
+And the way we're going
+to do that is we're
+
+00:24:19.73 --> 00:24:24.29
+finding some minimum over a set
+of all of our training data,
+
+00:24:24.29 --> 00:24:27.65
+some minimum set of parameters,
+where then the loss is actually
+
+00:24:27.65 --> 00:24:30.53
+minimized for all of those
+different data points.
+
+00:24:30.53 --> 00:24:33.22
+So what this actually
+looks like in practice,
+
+00:24:33.22 --> 00:24:35.30
+you're trying to find
+some theta star, which
+
+00:24:35.30 --> 00:24:37.62
+is like your optimal
+set of model parameters
+
+00:24:37.62 --> 00:24:39.32
+that minimize your
+cost function.
+
+00:24:39.32 --> 00:24:41.62
+And so maybe you start
+somewhere random,
+
+00:24:41.62 --> 00:24:44.90
+and then you calculate
+your gradient.
+
+00:24:44.90 --> 00:24:47.82
+Now you update the
+weights of that model
+
+00:24:47.82 --> 00:24:50.84
+in the direction of the
+gradient, and you step through,
+
+00:24:50.84 --> 00:24:53.18
+et cetera, et cetera.
+
+00:24:53.18 --> 00:24:56.62
+And I think many of you have
+probably seen this before,
+
+00:24:56.62 --> 00:24:59.02
+and we'll talk in
+an upcoming lecture,
+
+00:24:59.02 --> 00:25:01.02
+cover some of the different
+dimensions of things
+
+00:25:01.02 --> 00:25:03.94
+like stochastic gradient
+descent, et cetera.
+
+00:25:03.94 --> 00:25:08.26
+But we're assuming that
+you've seen this idea before,
+
+00:25:08.26 --> 00:25:12.06
+probably in intro to ML
+lecture, for example.
+
+00:25:12.06 --> 00:25:15.18
+Covering in this class, we'll go
+into a little bit more detail,
+
+00:25:15.18 --> 00:25:17.06
+backprop and
+specifically this idea
+
+00:25:17.06 --> 00:25:19.54
+of differential programming.
+
+00:25:19.54 --> 00:25:21.98
+So what does it actually look
+like to build programming
+
+00:25:21.98 --> 00:25:26.58
+languages that are structured
+around the idea of optimality
+
+00:25:26.58 --> 00:25:29.78
+and optimizing through gradient
+descent for different components
+
+00:25:29.78 --> 00:25:32.03
+of that architecture?
+
+00:25:32.03 --> 00:25:33.91
+And I think one of
+the things that's fun
+
+00:25:33.91 --> 00:25:37.47
+is thinking about what are
+you actually optimizing for,
+
+00:25:37.47 --> 00:25:42.15
+and what are you pushing
+the gradients through to?
+
+00:25:42.15 --> 00:25:47.91
+So here, one iteration
+of gradient descent
+
+00:25:47.91 --> 00:25:50.59
+is essentially
+something like this,
+
+00:25:50.59 --> 00:25:54.91
+and we have some learning rate.
+
+00:25:54.91 --> 00:25:57.59
+And all of that, we're going
+to go into in a lot more detail
+
+00:25:57.59 --> 00:26:00.43
+next Tuesday where we're
+going to be talking about,
+
+00:26:00.43 --> 00:26:02.23
+where does this
+actually come through,
+
+00:26:02.23 --> 00:26:05.63
+how do we think about what
+some of these choices are,
+
+00:26:05.63 --> 00:26:08.95
+and how we actually
+build out the learning
+
+00:26:08.95 --> 00:26:11.59
+structure for backprop.
+
+00:26:11.59 --> 00:26:13.19
+I do expect that
+you've seen things
+
+00:26:13.19 --> 00:26:16.11
+like multilayer perceptrons
+and nonlinearities, things
+
+00:26:16.11 --> 00:26:18.43
+like ReLUs, before.
+
+00:26:18.43 --> 00:26:21.71
+So computational neural network
+is often some form of vector
+
+00:26:21.71 --> 00:26:23.67
+in, vector out.
+
+00:26:23.67 --> 00:26:25.99
+And this arrow that goes
+from vector in to vector
+
+00:26:25.99 --> 00:26:27.87
+out is a lot of what
+we're going to be
+
+00:26:27.87 --> 00:26:30.37
+talking about in this class.
+
+00:26:30.37 --> 00:26:33.57
+What computation
+does that cover?
+
+00:26:33.57 --> 00:26:35.07
+How does that
+actually build out?
+
+00:26:35.07 --> 00:26:36.69
+So one cool thing
+about neural networks
+
+00:26:36.69 --> 00:26:40.49
+is that they often are reusing
+the same simple computational
+
+00:26:40.49 --> 00:26:42.61
+units over and over again.
+
+00:26:42.61 --> 00:26:46.25
+So there's often a lot of
+the same kinds of computation
+
+00:26:46.25 --> 00:26:49.15
+that are being
+repeated and reused.
+
+00:26:49.15 --> 00:26:51.49
+And what these actually look
+like, these building blocks
+
+00:26:51.49 --> 00:26:54.13
+that are being used
+over and over again,
+
+00:26:54.13 --> 00:26:57.61
+they're often some
+combination of a linear layer.
+
+00:26:57.61 --> 00:27:00.25
+So here-- and we will be
+sticking with this type
+
+00:27:00.25 --> 00:27:02.57
+of notation for the
+rest of the class--
+
+00:27:02.57 --> 00:27:05.45
+what we call z sub j, so
+some component of this output
+
+00:27:05.45 --> 00:27:08.57
+representation in
+that linear layer,
+
+00:27:08.57 --> 00:27:13.49
+that would be a sum over i
+of some weight times each
+
+00:27:13.49 --> 00:27:18.57
+of those input components--
+basically, pretty simple.
+
+00:27:18.57 --> 00:27:21.50
+And that can also be written
+essentially this way, where
+
+00:27:21.50 --> 00:27:23.09
+you have some set
+of weights, and then
+
+00:27:23.09 --> 00:27:25.11
+you also incorporate
+a bias term.
+
+00:27:25.11 --> 00:27:27.21
+And this is a term
+that does not actually
+
+00:27:27.21 --> 00:27:29.16
+take in any of those
+input components.
+
+00:27:29.16 --> 00:27:31.50
+It's just a bias.
+
+00:27:31.50 --> 00:27:34.78
+And that can also be written
+in a vectorized notation, which
+
+00:27:34.78 --> 00:27:36.58
+makes everything
+much more simple.
+
+00:27:36.58 --> 00:27:41.14
+So again, just with a focus on
+the notation, that output unit z
+
+00:27:41.14 --> 00:27:46.10
+sub j is x, that input
+vector, transposed times
+
+00:27:46.10 --> 00:27:49.22
+w sub j, so the set of weights
+that correspond to that output
+
+00:27:49.22 --> 00:27:52.58
+component and that bias term.
+
+00:27:52.58 --> 00:27:54.70
+And then what we
+consider theta-- so
+
+00:27:54.70 --> 00:27:56.66
+that's all the parameters
+of the model-- that's
+
+00:27:56.66 --> 00:28:01.14
+the set of all the weight
+terms and all the bias terms.
+
+00:28:01.14 --> 00:28:02.74
+So what actually
+makes a neural net
+
+00:28:02.74 --> 00:28:04.54
+a neural net is the
+fact that it's not just
+
+00:28:04.54 --> 00:28:06.62
+linear combinations of inputs.
+
+00:28:06.62 --> 00:28:10.86
+You also have some sort
+of nonlinear function
+
+00:28:10.86 --> 00:28:12.92
+that is mapping your outputs.
+
+00:28:12.92 --> 00:28:15.18
+And that's something
+like g sub z.
+
+00:28:15.18 --> 00:28:16.62
+And in this case,
+that's something
+
+00:28:16.62 --> 00:28:18.48
+like a pointwise non-linearity.
+
+00:28:18.48 --> 00:28:20.94
+So that's an important dimension
+that these non-linearities
+
+00:28:20.94 --> 00:28:23.14
+are usually pointwise.
+
+00:28:23.14 --> 00:28:25.86
+So one possible non-linearity
+would be this one.
+
+00:28:25.86 --> 00:28:29.99
+g sub z would be 1 if z is
+greater than 0, or 0 otherwise.
+
+00:28:29.99 --> 00:28:32.65
+Is this a good choice of
+non-linearity for a neural net?
+
+00:28:32.65 --> 00:28:33.35
+AUDIENCE: No.
+
+00:28:33.35 --> 00:28:34.19
+SARA BEERY: Why not?
+
+00:28:34.19 --> 00:28:36.03
+AUDIENCE: It's not
+differentiable?
+
+00:28:36.03 --> 00:28:39.07
+SARA BEERY: Yeah, so it's
+not differentiable, exactly.
+
+00:28:39.07 --> 00:28:43.89
+And why is the fact that it's
+not differentiable not good?
+
+00:28:43.89 --> 00:28:44.39
+Yeah.
+
+00:28:44.39 --> 00:28:47.35
+AUDIENCE: Because it
+hinders backpropagation.
+
+00:28:47.35 --> 00:28:49.15
+SARA BEERY: It hinders
+backpropagation.
+
+00:28:49.15 --> 00:28:51.07
+Why?
+
+00:28:51.07 --> 00:28:53.47
+AUDIENCE: It makes
+the [INAUDIBLE] set
+
+00:28:53.47 --> 00:28:55.43
+harder [INAUDIBLE].
+
+00:28:55.43 --> 00:28:57.21
+SARA BEERY: Yeah, so
+the directionality.
+
+00:28:57.21 --> 00:29:01.75
+If you're anywhere
+on this graph,
+
+00:29:01.75 --> 00:29:04.55
+you don't know which
+way to go, essentially.
+
+00:29:04.55 --> 00:29:05.95
+The gradient is zero.
+
+00:29:05.95 --> 00:29:08.61
+So you can try to take
+a gradient ascent step.
+
+00:29:08.61 --> 00:29:13.43
+You're not going to move because
+the gradient is zero, exactly.
+
+00:29:13.43 --> 00:29:18.87
+So this roughly is called a
+perceptron, this linear input
+
+00:29:18.87 --> 00:29:22.27
+plus a pointwise non-linearity.
+
+00:29:22.27 --> 00:29:26.97
+And you actually can arguably
+do linear classification
+
+00:29:26.97 --> 00:29:27.95
+with a perceptron.
+
+00:29:27.95 --> 00:29:30.73
+So if you take a
+really simple version
+
+00:29:30.73 --> 00:29:34.33
+of this where your input is
+just two-dimensional, x1, x2,
+
+00:29:34.33 --> 00:29:37.61
+and you have some w1/w2 learned
+weight terms that you use
+
+00:29:37.61 --> 00:29:39.91
+to combine to get z,
+which is your hidden unit,
+
+00:29:39.91 --> 00:29:43.77
+and then you map that
+via a function to y,
+
+00:29:43.77 --> 00:29:46.77
+you then define z as
+x transpose w plus b.
+
+00:29:46.77 --> 00:29:51.17
+And y is now some
+function g of z.
+
+00:29:51.17 --> 00:29:54.57
+What this looks like
+for any set of values
+
+00:29:54.57 --> 00:29:56.97
+will be something like
+this, where you essentially
+
+00:29:56.97 --> 00:29:58.61
+have almost a ramp.
+
+00:29:58.61 --> 00:30:04.29
+It's a clear and
+standard gradient across.
+
+00:30:04.29 --> 00:30:06.15
+Why would it look like this?
+
+00:30:06.15 --> 00:30:10.75
+So why is it smooth and
+reasonably straight?
+
+00:30:14.33 --> 00:30:17.89
+I maybe didn't pose that
+question super clearly.
+
+00:30:17.89 --> 00:30:21.33
+So essentially, the
+reason that mapping it
+
+00:30:21.33 --> 00:30:24.33
+looks like this is
+because it's a plane.
+
+00:30:24.33 --> 00:30:28.94
+So any two-dimensional
+version of this
+
+00:30:28.94 --> 00:30:33.78
+is going to be a plane
+with some orientation.
+
+00:30:33.78 --> 00:30:36.20
+And then very
+straightforward, actually,
+
+00:30:36.20 --> 00:30:38.14
+to turn that into a
+linear classifier,
+
+00:30:38.14 --> 00:30:39.58
+because all you're
+doing is taking
+
+00:30:39.58 --> 00:30:41.82
+some threshold on that plane.
+
+00:30:41.82 --> 00:30:43.90
+So even a single-layer
+neural network
+
+00:30:43.90 --> 00:30:46.04
+can perform linear
+classification
+
+00:30:46.04 --> 00:30:47.58
+because now this
+threshold, that's
+
+00:30:47.58 --> 00:30:50.32
+basically what that stepwise
+non-linearity is giving you.
+
+00:30:50.32 --> 00:30:55.18
+It's giving you something that
+is thresholded at some value.
+
+00:30:55.18 --> 00:30:57.16
+And so even with
+something quite simple,
+
+00:30:57.16 --> 00:30:59.06
+you can do classification.
+
+00:30:59.06 --> 00:31:02.65
+Now, that's assuming that your
+data is linearly separable.
+
+00:31:02.65 --> 00:31:04.28
+So if you have training
+data like this,
+
+00:31:04.28 --> 00:31:08.34
+which is linearly separable,
+and now you want to find some
+
+00:31:08.34 --> 00:31:12.02
+optimal set of weights and
+biases that will minimize some
+
+00:31:12.02 --> 00:31:16.50
+loss term where now, again, this
+loss is the difference between
+
+00:31:16.50 --> 00:31:19.94
+the true value-- so here,
+the true value is 1 or 0--
+
+00:31:19.94 --> 00:31:23.62
+and the functional mapping
+of the inputs to something
+
+00:31:23.62 --> 00:31:25.12
+like that value.
+
+00:31:25.12 --> 00:31:26.67
+If you have something
+like this, this
+
+00:31:26.67 --> 00:31:28.15
+is what we'd call a bad fit.
+
+00:31:28.15 --> 00:31:31.03
+You have 7 misclassifications.
+
+00:31:31.03 --> 00:31:33.27
+You're wrong about more
+things than you're right.
+
+00:31:33.27 --> 00:31:35.51
+And all of those
+red values, those
+
+00:31:35.51 --> 00:31:38.95
+are going to give you a high
+value in your loss function.
+
+00:31:38.95 --> 00:31:42.55
+Or you could find something
+that's like an OK fit,
+
+00:31:42.55 --> 00:31:45.09
+less misclassifications.
+
+00:31:45.09 --> 00:31:48.03
+And maybe this is something
+that your model updates to
+
+00:31:48.03 --> 00:31:50.11
+after a single gradient step.
+
+00:31:50.11 --> 00:31:53.07
+Your decision surface is linear,
+and now you're fiddling around
+
+00:31:53.07 --> 00:31:56.99
+with what that classifier is--
+
+00:31:56.99 --> 00:32:00.91
+basically, which values of
+weights and biases you need.
+
+00:32:00.91 --> 00:32:02.42
+And then maybe
+after a few steps,
+
+00:32:02.42 --> 00:32:04.51
+you would find something
+that is a good fit, where
+
+00:32:04.51 --> 00:32:07.19
+you're not actually
+misclassifying anything.
+
+00:32:07.19 --> 00:32:09.59
+So it is possible
+to do classification
+
+00:32:09.59 --> 00:32:12.21
+of linear things,
+linearly separable things,
+
+00:32:12.21 --> 00:32:14.31
+even with something
+like a perceptron that's
+
+00:32:14.31 --> 00:32:16.67
+doing these really
+simple thresholding-based
+
+00:32:16.67 --> 00:32:19.27
+non-linearities.
+
+00:32:19.27 --> 00:32:21.87
+But like we said,
+this actually would
+
+00:32:21.87 --> 00:32:24.97
+be really difficult to learn.
+
+00:32:24.97 --> 00:32:29.85
+So instead, maybe you would
+try something like a tanh.
+
+00:32:29.85 --> 00:32:33.93
+So this is another
+pointwise non-linearity.
+
+00:32:33.93 --> 00:32:38.61
+And it was one of the earliest
+ones that people looked at.
+
+00:32:38.61 --> 00:32:40.13
+The things that
+are nice about this
+
+00:32:40.13 --> 00:32:42.97
+is it's bounded between minus
+1 and 1, so none of the values
+
+00:32:42.97 --> 00:32:44.74
+are super huge.
+
+00:32:44.74 --> 00:32:46.33
+And you get saturation
+of the gradient
+
+00:32:46.33 --> 00:32:48.07
+for super large or
+super small inputs.
+
+00:32:48.07 --> 00:32:51.55
+You're not getting
+explosions necessarily.
+
+00:32:51.55 --> 00:32:53.45
+But also, if you start
+out somewhere that's
+
+00:32:53.45 --> 00:32:55.01
+really far from the
+center, you don't
+
+00:32:55.01 --> 00:32:58.17
+have a lot of training signal
+because we're getting close to 0
+
+00:32:58.17 --> 00:32:59.73
+in our gradient.
+
+00:32:59.73 --> 00:33:01.73
+And so those
+gradients do go to 0
+
+00:33:01.73 --> 00:33:04.69
+as we go to infinity
+in either direction.
+
+00:33:04.69 --> 00:33:07.61
+The outputs are centered at 0.
+
+00:33:07.61 --> 00:33:12.37
+So the tanh of z can also be
+written as 2 times the sigmoid
+
+00:33:12.37 --> 00:33:13.89
+of 2z minus 1.
+
+00:33:13.89 --> 00:33:16.45
+So let's look at what that
+sigmoid function looks like.
+
+00:33:16.45 --> 00:33:19.81
+So in this case, this
+is a sigmoid, 1 over 1
+
+00:33:19.81 --> 00:33:25.09
+plus e to the minus
+h or e to the minus--
+
+00:33:25.09 --> 00:33:26.40
+the notation is wrong.
+
+00:33:26.40 --> 00:33:28.50
+It should be minus z.
+
+00:33:28.50 --> 00:33:31.42
+This can be interpreted as
+the firing rate of a neuron.
+
+00:33:31.42 --> 00:33:34.28
+That was one interpretation
+of it initially.
+
+00:33:34.28 --> 00:33:38.58
+It's bounded between 0 and
+1, so it's not ever negative.
+
+00:33:38.58 --> 00:33:40.62
+Again, you have saturation
+of that gradient
+
+00:33:40.62 --> 00:33:43.46
+for super large or
+super small inputs.
+
+00:33:43.46 --> 00:33:46.38
+And all those gradients go to 0.
+
+00:33:46.38 --> 00:33:48.75
+And the outputs themselves
+are centered around 0.5.
+
+00:33:48.75 --> 00:33:50.30
+So this is kind of
+poor conditioning.
+
+00:33:50.30 --> 00:33:52.46
+It's slightly biased.
+
+00:33:52.46 --> 00:33:55.14
+In practice, we don't
+actually use this.
+
+00:33:55.14 --> 00:33:57.66
+So instead, in
+practice, what we often
+
+00:33:57.66 --> 00:33:59.66
+use is something called
+a rectified linear unit,
+
+00:33:59.66 --> 00:34:01.06
+or a ReLU.
+
+00:34:01.06 --> 00:34:05.62
+And this is just
+the max of 0 and z.
+
+00:34:05.62 --> 00:34:08.76
+And this is unbounded
+on the positive side,
+
+00:34:08.76 --> 00:34:12.21
+so it can go all the way to
+infinity, which can result in,
+
+00:34:12.21 --> 00:34:14.58
+for example, sometimes things
+like exploding gradients,
+
+00:34:14.58 --> 00:34:16.46
+because the values
+can get very large.
+
+00:34:16.46 --> 00:34:18.86
+But it's super
+efficient to implement.
+
+00:34:18.86 --> 00:34:23.07
+Essentially, the derivatives
+are just that step function.
+
+00:34:23.07 --> 00:34:25.86
+And it also seems to help
+speed up convergence.
+
+00:34:25.86 --> 00:34:28.11
+So in that Krizhevsky paper,
+they showed that they got
+
+00:34:28.11 --> 00:34:32.46
+something like a 6x speed-up
+using a ReLU over using
+
+00:34:32.46 --> 00:34:34.83
+something like a tanh in
+terms of converging that model
+
+00:34:34.83 --> 00:34:36.11
+and learning.
+
+00:34:36.11 --> 00:34:39.05
+The drawback is that if you're
+strongly in the negative region,
+
+00:34:39.05 --> 00:34:41.42
+the unit's what we call dead.
+
+00:34:41.42 --> 00:34:44.42
+There is no gradient,
+and so you essentially
+
+00:34:44.42 --> 00:34:46.75
+have this gradient
+collapse, where
+
+00:34:46.75 --> 00:34:51.43
+you can no longer learn from
+that component of the vector.
+
+00:34:51.43 --> 00:34:53.38
+But this is our default
+choice, and it's widely
+
+00:34:53.38 --> 00:34:54.71
+used in current models.
+
+00:34:54.71 --> 00:34:56.96
+There's lots of
+slight tweaks to this,
+
+00:34:56.96 --> 00:34:59.87
+but this is really,
+really common.
+
+00:34:59.87 --> 00:35:02.91
+So then the last thing I want
+to talk about in this section
+
+00:35:02.91 --> 00:35:04.63
+is stacking layers.
+
+00:35:04.63 --> 00:35:06.59
+So we talked about
+a single version
+
+00:35:06.59 --> 00:35:09.59
+of this, where you have
+your linear projection,
+
+00:35:09.59 --> 00:35:11.27
+and then you have
+a non-linearity.
+
+00:35:11.27 --> 00:35:13.07
+But now you can take
+that, and you can just
+
+00:35:13.07 --> 00:35:14.91
+stack another one on top of it.
+
+00:35:14.91 --> 00:35:18.67
+So now both z and
+h are hidden units.
+
+00:35:18.67 --> 00:35:20.55
+They're somewhere in
+the middle of the model.
+
+00:35:20.55 --> 00:35:23.01
+We don't necessarily--
+they're not seen
+
+00:35:23.01 --> 00:35:25.73
+at the inputs or the outputs.
+
+00:35:25.73 --> 00:35:27.21
+And essentially,
+then, you can also
+
+00:35:27.21 --> 00:35:28.85
+remember that all
+of these things
+
+00:35:28.85 --> 00:35:32.45
+are stacked on top of each
+other, almost in parallel
+
+00:35:32.45 --> 00:35:34.61
+as well, because all of
+these inputs are mapping
+
+00:35:34.61 --> 00:35:37.09
+to the different components
+of the output vector.
+
+00:35:37.09 --> 00:35:40.49
+And so you have weights for all
+of those different dimensions.
+
+00:35:40.49 --> 00:35:45.01
+So this means that h, our
+output of the first layer,
+
+00:35:45.01 --> 00:35:48.37
+is going to be g, that
+pointwise non-linearity, applied
+
+00:35:48.37 --> 00:35:54.05
+to now instead of vectorized
+w transpose x sub j to give us
+
+00:35:54.05 --> 00:35:57.37
+the individual j-th component,
+you can actually just think
+
+00:35:57.37 --> 00:35:59.91
+of this now as a matrix
+multiplied by a vector,
+
+00:35:59.91 --> 00:36:02.81
+all of the weights for all
+of those different dimensions
+
+00:36:02.81 --> 00:36:06.81
+multiplied by the vector x plus
+the vector of all your biases,
+
+00:36:06.81 --> 00:36:07.81
+b1.
+
+00:36:07.81 --> 00:36:10.69
+So now you have this
+cleaner notation.
+
+00:36:10.69 --> 00:36:15.45
+And then now y is again g, that
+same pointwise non-linearity
+
+00:36:15.45 --> 00:36:20.06
+applied on top of your
+outputs of your first thing,
+
+00:36:20.06 --> 00:36:23.78
+but now with h, multiplied
+by that vector of all
+
+00:36:23.78 --> 00:36:26.06
+your second-layer
+weights and added
+
+00:36:26.06 --> 00:36:28.02
+with your second-layer
+bias term.
+
+00:36:28.02 --> 00:36:31.17
+And so now, your set theta,
+your model representation,
+
+00:36:31.17 --> 00:36:33.30
+is the set of all of the
+different weights from all
+
+00:36:33.30 --> 00:36:35.62
+the different layers, as well as
+all the different biases in all
+
+00:36:35.62 --> 00:36:36.49
+the different layers.
+
+00:36:36.49 --> 00:36:37.78
+Oh, thank you.
+
+00:36:37.78 --> 00:36:38.28
+Oh, yeah.
+
+00:36:38.28 --> 00:36:39.19
+Thank you.
+
+00:36:39.19 --> 00:36:40.74
+AUDIENCE: Based off
+your application,
+
+00:36:40.74 --> 00:36:42.60
+how do you choose your
+activation function?
+
+00:36:42.60 --> 00:36:44.74
+What are the parameters of
+what might be considered
+
+00:36:44.74 --> 00:36:49.38
+a good model or, I guess,
+a good activation function
+
+00:36:49.38 --> 00:36:52.82
+based off of what you want
+to use your model for?
+
+00:36:52.82 --> 00:36:54.76
+SARA BEERY: So you're
+asking, in practice,
+
+00:36:54.76 --> 00:36:58.42
+are there any best practices for
+choosing the non-linearity based
+
+00:36:58.42 --> 00:37:02.10
+on different types of data.
+
+00:37:02.10 --> 00:37:03.94
+I think in the literature,
+there's maybe--
+
+00:37:03.94 --> 00:37:06.12
+you can see it coming out.
+
+00:37:06.12 --> 00:37:12.22
+But often, people really
+do use ReLU quite a lot.
+
+00:37:12.22 --> 00:37:17.15
+But I wouldn't say that there's
+any great general rules of thumb
+
+00:37:17.15 --> 00:37:17.71
+there.
+
+00:37:17.71 --> 00:37:25.69
+And often-- yeah.
+
+00:37:25.69 --> 00:37:27.19
+I would say there's
+different things
+
+00:37:27.19 --> 00:37:30.65
+that people have converged upon
+based on experimental success.
+
+00:37:30.65 --> 00:37:33.71
+So you'll see in the
+literature like, oh, yeah,
+
+00:37:33.71 --> 00:37:35.59
+everything in this line
+of work on these data
+
+00:37:35.59 --> 00:37:38.35
+sets with these things,
+they're always using
+
+00:37:38.35 --> 00:37:40.65
+one or the other component.
+
+00:37:40.65 --> 00:37:42.25
+And then people build on that.
+
+00:37:42.25 --> 00:37:44.69
+Sometimes that's called grad
+student gradient descent
+
+00:37:44.69 --> 00:37:47.31
+[LAUGHS] because
+you're essentially
+
+00:37:47.31 --> 00:37:49.79
+writing research papers and
+learning from those research
+
+00:37:49.79 --> 00:37:53.11
+papers what parameters in terms
+of things like your activation
+
+00:37:53.11 --> 00:37:54.17
+functions make sense.
+
+00:37:54.17 --> 00:37:57.83
+But yeah, I don't know that
+I have great rules of thumb
+
+00:37:57.83 --> 00:37:59.47
+of, oh, for this
+type of application,
+
+00:37:59.47 --> 00:38:02.79
+you should always
+use this or that.
+
+00:38:02.79 --> 00:38:03.95
+Do you?
+
+00:38:03.95 --> 00:38:05.71
+AUDIENCE: Yeah, it's
+not a hard science.
+
+00:38:05.71 --> 00:38:06.60
+SARA BEERY: Yeah.
+
+00:38:06.60 --> 00:38:08.15
+AUDIENCE: But it's
+usually about what
+
+00:38:08.15 --> 00:38:10.91
+makes the network more trainable
+rather than trying to model
+
+00:38:10.91 --> 00:38:12.55
+a certain kind of data.
+
+00:38:12.55 --> 00:38:14.63
+There are a couple of
+examples, like using
+
+00:38:14.63 --> 00:38:18.21
+a sinusoidal non-linearity
+to pick out some for you,
+
+00:38:18.21 --> 00:38:19.13
+if you'd like.
+
+00:38:19.13 --> 00:38:21.49
+There are a few examples
+that do but usually not.
+
+00:38:21.49 --> 00:38:25.45
+And [INAUDIBLE] does deep
+learning has a great answer
+
+00:38:25.45 --> 00:38:26.26
+to that question.
+
+00:38:26.26 --> 00:38:26.97
+SARA BEERY: Yeah.
+
+00:38:26.97 --> 00:38:28.37
+So what Jeremy was
+saying is basically,
+
+00:38:28.37 --> 00:38:29.47
+it's not a hard science.
+
+00:38:29.47 --> 00:38:31.45
+We don't have
+theoretical guarantees
+
+00:38:31.45 --> 00:38:34.25
+of this is what you should do.
+
+00:38:34.25 --> 00:38:36.19
+But in practice,
+there are-- yeah,
+
+00:38:36.19 --> 00:38:38.32
+there's counterexamples to that.
+
+00:38:38.32 --> 00:38:40.45
+So if you know, for example,
+that your features are
+
+00:38:40.45 --> 00:38:43.37
+sinusoidal, it maybe makes
+sense to try to pick out
+
+00:38:43.37 --> 00:38:44.63
+Fourier representations.
+
+00:38:44.63 --> 00:38:46.13
+You're working in
+the Fourier space,
+
+00:38:46.13 --> 00:38:49.53
+then maybe you should use
+a sinusoidal activation.
+
+00:38:49.53 --> 00:38:52.71
+Anyway, but yes, I wish that
+we better understood it.
+
+00:38:52.71 --> 00:38:55.65
+And that's, I think, why
+we need a lot more research
+
+00:38:55.65 --> 00:38:57.61
+on the theoretical
+side of understanding,
+
+00:38:57.61 --> 00:39:02.21
+how do we actually choose
+these things appropriately
+
+00:39:02.21 --> 00:39:04.57
+instead of maybe learning
+everything from scratch
+
+00:39:04.57 --> 00:39:07.71
+or doing it experimentally,
+burning all those trees?
+
+00:39:10.59 --> 00:39:11.09
+Cool.
+
+00:39:11.09 --> 00:39:12.73
+So the parameters
+of our model are now
+
+00:39:12.73 --> 00:39:14.18
+all the different
+layers of weights
+
+00:39:14.18 --> 00:39:17.02
+and all the different
+layers of biases.
+
+00:39:17.02 --> 00:39:20.06
+And so like we said, you
+can do linear classification
+
+00:39:20.06 --> 00:39:21.04
+with a perceptron.
+
+00:39:21.04 --> 00:39:23.02
+But the fun thing is-- oops--
+
+00:39:23.02 --> 00:39:25.66
+you can do non-linear
+classification with a deep net,
+
+00:39:25.66 --> 00:39:29.38
+even if that deep net is
+just a two-layer perceptron.
+
+00:39:29.38 --> 00:39:33.34
+So here, now we've built a
+double-layer model, still
+
+00:39:33.34 --> 00:39:34.48
+only in two dimensions.
+
+00:39:34.48 --> 00:39:38.02
+So now we have mapped
+through essentially just
+
+00:39:38.02 --> 00:39:40.50
+this simple non-linearity
+in between these two
+
+00:39:40.50 --> 00:39:42.14
+different layers.
+
+00:39:42.14 --> 00:39:44.02
+Now if we look at
+what this looks like,
+
+00:39:44.02 --> 00:39:48.50
+that first layer is giving
+us one kind of ramp.
+
+00:39:48.50 --> 00:39:50.54
+The second layer gives
+us a different ramp
+
+00:39:50.54 --> 00:39:52.34
+because it's a
+different linear model.
+
+00:39:52.34 --> 00:39:55.38
+And now if you do this
+non-linear combination of them,
+
+00:39:55.38 --> 00:39:58.74
+essentially what you get out
+is you can actually map--
+
+00:39:58.74 --> 00:40:01.78
+it's almost like think about
+the intersection of one ramp
+
+00:40:01.78 --> 00:40:03.14
+with another ramp.
+
+00:40:03.14 --> 00:40:07.46
+You get a kind of triangular,
+almost a pyramidal component
+
+00:40:07.46 --> 00:40:10.52
+that will be higher
+than everything else.
+
+00:40:10.52 --> 00:40:13.60
+And so now you can still take
+a simple threshold of that,
+
+00:40:13.60 --> 00:40:16.23
+and now you can get out a
+non-linear classification.
+
+00:40:16.23 --> 00:40:18.82
+And, of course, you can expand
+this into many more dimensions.
+
+00:40:18.82 --> 00:40:21.68
+But this is, I think, some
+nice, simple intuition building
+
+00:40:21.68 --> 00:40:25.64
+as to why you start getting
+non-linear models when you're
+
+00:40:25.64 --> 00:40:30.60
+taking linear combinations,
+but with these non-linearities.
+
+00:40:30.60 --> 00:40:31.32
+Cool.
+
+00:40:31.32 --> 00:40:34.52
+So another-- so we expect
+that you've seen a lot of that
+
+00:40:34.52 --> 00:40:35.40
+before.
+
+00:40:35.40 --> 00:40:37.06
+But moving forward,
+one of the things
+
+00:40:37.06 --> 00:40:38.52
+we are going to
+cover in this class
+
+00:40:38.52 --> 00:40:41.12
+is what we can approximate.
+
+00:40:41.12 --> 00:40:44.08
+So what do we know about
+what is possible to
+
+00:40:44.08 --> 00:40:47.00
+approximate with deep learning?
+
+00:40:47.00 --> 00:40:50.28
+So one dimension of that
+is representational power.
+
+00:40:50.28 --> 00:40:52.00
+So you have a single layer.
+
+00:40:52.00 --> 00:40:55.80
+You can do any linear
+decision surface.
+
+00:40:55.80 --> 00:40:57.80
+If you have 2-plus
+layers, in theory,
+
+00:40:57.80 --> 00:41:01.28
+you can actually
+represent any function.
+
+00:41:01.28 --> 00:41:03.28
+And this is assuming,
+of course, that you
+
+00:41:03.28 --> 00:41:05.04
+have some non-trivial
+non-linearity
+
+00:41:05.04 --> 00:41:06.89
+between those layers
+because if you don't
+
+00:41:06.89 --> 00:41:08.44
+have that non-linearity,
+it turns out
+
+00:41:08.44 --> 00:41:11.52
+that a linear layer and
+another linear layer, this
+
+00:41:11.52 --> 00:41:13.13
+is just a linear combination.
+
+00:41:13.13 --> 00:41:14.21
+It's still linear.
+
+00:41:14.21 --> 00:41:16.13
+So you need that non-linearity.
+
+00:41:16.13 --> 00:41:18.75
+But doing that, you can
+actually approximate anything.
+
+00:41:18.75 --> 00:41:20.21
+And one way to
+think about it is,
+
+00:41:20.21 --> 00:41:24.97
+given some amount of
+capacity, some number
+
+00:41:24.97 --> 00:41:28.35
+of different dimensions
+that you can do,
+
+00:41:28.35 --> 00:41:30.47
+you can actually
+approximate any function.
+
+00:41:30.47 --> 00:41:35.39
+This is a rough,
+hand-wavy intuition thing.
+
+00:41:35.39 --> 00:41:44.84
+But as you're shrinking the
+size of these different vertical
+
+00:41:44.84 --> 00:41:47.01
+things, you're getting
+something like a Riemann sum.
+
+00:41:47.01 --> 00:41:48.61
+You can approximate
+any integral as long
+
+00:41:48.61 --> 00:41:50.11
+as you have enough
+capacity in terms
+
+00:41:50.11 --> 00:41:52.89
+of the number of small things
+that you're building up.
+
+00:41:52.89 --> 00:41:57.45
+So this gets at basically one of
+the issues, which is efficiency.
+
+00:41:57.45 --> 00:41:59.13
+So in theory, you
+could approximate
+
+00:41:59.13 --> 00:42:03.49
+any complicated function
+with a sufficiently wide
+
+00:42:03.49 --> 00:42:04.55
+two-layer network.
+
+00:42:04.55 --> 00:42:06.97
+So this means not two
+dimensions, maybe thousands
+
+00:42:06.97 --> 00:42:09.33
+or millions of dimensions.
+
+00:42:09.33 --> 00:42:13.66
+But in practice, that's
+actually very inefficient.
+
+00:42:13.66 --> 00:42:16.42
+So a narrow deep
+model, maybe something
+
+00:42:16.42 --> 00:42:19.38
+that only has much fewer
+dimensions in terms
+
+00:42:19.38 --> 00:42:22.36
+of the size of each vector
+or each input and output,
+
+00:42:22.36 --> 00:42:25.42
+but now many, many, many
+more stacked layers,
+
+00:42:25.42 --> 00:42:27.76
+you might be able to, with
+a lot less parameters,
+
+00:42:27.76 --> 00:42:30.54
+approximate the same
+complex function.
+
+00:42:30.54 --> 00:42:32.08
+In practice, we do
+find that's true.
+
+00:42:32.08 --> 00:42:34.13
+More layers helps.
+
+00:42:34.13 --> 00:42:36.22
+And we'll get into this a
+little bit in lecture 3,
+
+00:42:36.22 --> 00:42:39.06
+which is about approximation
+theory, the theory of what
+
+00:42:39.06 --> 00:42:41.48
+it is possible to approximate.
+
+00:42:41.48 --> 00:42:42.94
+And then the other
+thing that we're
+
+00:42:42.94 --> 00:42:45.42
+going to cover in this
+class is architectures.
+
+00:42:45.42 --> 00:42:47.64
+So when we talk
+about deep networks,
+
+00:42:47.64 --> 00:42:50.42
+really, often, we're talking
+about something that's roughly
+
+00:42:50.42 --> 00:42:54.52
+like this, some cascade of
+repeated simple computations,
+
+00:42:54.52 --> 00:42:56.86
+each of these linear
+and then linear models
+
+00:42:56.86 --> 00:42:58.74
+with a non-linearity.
+
+00:42:58.74 --> 00:43:00.54
+And then with every
+increasing layer,
+
+00:43:00.54 --> 00:43:03.12
+we're getting more
+abstracted representations.
+
+00:43:03.12 --> 00:43:05.74
+You're getting a
+higher capacity model.
+
+00:43:05.74 --> 00:43:08.38
+And this means it can form
+more complex and abstract
+
+00:43:08.38 --> 00:43:09.62
+calculations.
+
+00:43:09.62 --> 00:43:13.66
+Whereas a shallow network, if
+it's not sufficiently wide,
+
+00:43:13.66 --> 00:43:16.80
+it could maybe only efficiently
+compute simple things
+
+00:43:16.80 --> 00:43:19.13
+like maybe finding
+edges, a deep network
+
+00:43:19.13 --> 00:43:20.76
+could efficiently
+compute harder things
+
+00:43:20.76 --> 00:43:24.64
+like recognizing this clownfish
+or translating English
+
+00:43:24.64 --> 00:43:27.08
+to Chinese.
+
+00:43:27.08 --> 00:43:29.76
+And so this classification
+of complex things,
+
+00:43:29.76 --> 00:43:31.36
+essentially, your
+whole function f
+
+00:43:31.36 --> 00:43:36.44
+of x is now this stacked
+or almost chain-like
+
+00:43:36.44 --> 00:43:39.28
+mapping from your final
+layer, which is then
+
+00:43:39.28 --> 00:43:42.40
+a functional mapping
+of your previous layer,
+
+00:43:42.40 --> 00:43:46.16
+and in and in and in and in,
+all the way back to that input.
+
+00:43:46.16 --> 00:43:47.72
+And there's a lot
+of different ways
+
+00:43:47.72 --> 00:43:49.68
+that we've learned to
+build these mappings
+
+00:43:49.68 --> 00:43:52.08
+for different types
+of problems and based
+
+00:43:52.08 --> 00:43:54.26
+on the structure of the
+data we're trying to model.
+
+00:43:54.26 --> 00:43:55.26
+And we'll get into that.
+
+00:43:55.26 --> 00:43:58.54
+We'll talk about CNNs, GNNs,
+transformers, and RNNs,
+
+00:43:58.54 --> 00:44:01.44
+so convolutional neural
+networks, graph neural networks,
+
+00:44:01.44 --> 00:44:05.18
+transformers, and
+recurrent neural networks.
+
+00:44:05.18 --> 00:44:06.64
+And then the other
+thing that we're
+
+00:44:06.64 --> 00:44:08.26
+going to be talking
+about in this class
+
+00:44:08.26 --> 00:44:12.25
+is when and why
+we can generalize.
+
+00:44:12.25 --> 00:44:13.95
+So why do deep nets generalize?
+
+00:44:13.95 --> 00:44:15.93
+Essentially, deep nets
+have so many parameters,
+
+00:44:15.93 --> 00:44:18.19
+they could just act
+like lookup tables.
+
+00:44:18.19 --> 00:44:20.35
+They would just regurgitate
+the training data.
+
+00:44:20.35 --> 00:44:23.07
+But instead, they seem to
+learn rules that generalize.
+
+00:44:23.07 --> 00:44:25.11
+And this actually
+defies classical theory.
+
+00:44:25.11 --> 00:44:27.85
+So the classical
+theory basically
+
+00:44:27.85 --> 00:44:31.71
+says that if your model
+is overparameterized,
+
+00:44:31.71 --> 00:44:33.03
+it will overfit.
+
+00:44:33.03 --> 00:44:37.57
+There's this capacity
+versus risk or error curve
+
+00:44:37.57 --> 00:44:40.07
+where if you don't
+have enough capacity,
+
+00:44:40.07 --> 00:44:41.77
+you're going to
+underfit the model.
+
+00:44:41.77 --> 00:44:44.81
+And then with too much capacity,
+you're going to overfit.
+
+00:44:44.81 --> 00:44:47.57
+But in practice-- and this
+is from this paper "Double
+
+00:44:47.57 --> 00:44:48.85
+Descent"--
+
+00:44:48.85 --> 00:44:53.61
+what we see is that in this
+modern interpolating regime,
+
+00:44:53.61 --> 00:44:56.51
+we go past that point of
+being overparameterized,
+
+00:44:56.51 --> 00:44:59.33
+and we're actually then
+able to actually pass
+
+00:44:59.33 --> 00:45:01.45
+some interpolation
+threshold or ability
+
+00:45:01.45 --> 00:45:03.09
+to have enough
+capacity in the model
+
+00:45:03.09 --> 00:45:05.27
+to interpolate between
+the data points.
+
+00:45:05.27 --> 00:45:08.46
+We're actually able to then
+potentially get even better,
+
+00:45:08.46 --> 00:45:10.76
+even though the models are
+massively overparameterized.
+
+00:45:10.76 --> 00:45:11.35
+Yeah.
+
+00:45:11.35 --> 00:45:12.98
+AUDIENCE: What do
+you mean by capacity?
+
+00:45:12.98 --> 00:45:13.98
+SARA BEERY: Capacity
+is the number
+
+00:45:13.98 --> 00:45:15.44
+of parameters in the model.
+
+00:45:15.44 --> 00:45:17.38
+So that's both the
+width and the depth,
+
+00:45:17.38 --> 00:45:22.14
+basically how many values are
+captured in those model weights?
+
+00:45:22.14 --> 00:45:23.50
+Yeah.
+
+00:45:23.50 --> 00:45:26.18
+Yeah.
+
+00:45:26.18 --> 00:45:27.90
+Yes, thank you.
+
+00:45:27.90 --> 00:45:31.42
+AUDIENCE: And how does that
+relate to the size of the data
+
+00:45:31.42 --> 00:45:33.14
+samples that you're passing?
+
+00:45:33.14 --> 00:45:34.58
+SARA BEERY: Yeah.
+
+00:45:34.58 --> 00:45:38.24
+So that is not a
+dimension on this plot,
+
+00:45:38.24 --> 00:45:39.92
+but it definitely
+is also related.
+
+00:45:39.92 --> 00:45:42.98
+So if you have--
+but it's related
+
+00:45:42.98 --> 00:45:44.50
+in a different dimension.
+
+00:45:44.50 --> 00:45:47.42
+If you're learning
+from fewer data points,
+
+00:45:47.42 --> 00:45:51.76
+it's very easy to learn to maybe
+overfit to those data points.
+
+00:45:51.76 --> 00:45:54.76
+So you could think of that
+honestly, in another way,
+
+00:45:54.76 --> 00:45:57.10
+maybe as being a different
+dimension of capacity here,
+
+00:45:57.10 --> 00:45:59.72
+where it's like almost the
+capacity of your training data.
+
+00:45:59.72 --> 00:46:02.40
+But, of course, there's
+not a direct translation.
+
+00:46:02.40 --> 00:46:04.32
+But so if you don't have
+enough training data,
+
+00:46:04.32 --> 00:46:06.57
+you also can't learn to
+interpolate between those data
+
+00:46:06.57 --> 00:46:09.96
+points because you don't have
+enough coverage of the data
+
+00:46:09.96 --> 00:46:12.25
+distribution.
+
+00:46:12.25 --> 00:46:13.38
+I live in that world a lot.
+
+00:46:13.38 --> 00:46:16.68
+We often don't have
+enough data to learn
+
+00:46:16.68 --> 00:46:19.82
+a general representation
+without a lot of handy tricks.
+
+00:46:19.82 --> 00:46:22.00
+We will talk about some
+of those different tricks
+
+00:46:22.00 --> 00:46:23.70
+in this class, some
+of the different ways
+
+00:46:23.70 --> 00:46:26.80
+that we try to convince
+models not to overfit to data
+
+00:46:26.80 --> 00:46:30.56
+and try to learn to
+generalize beyond maybe what
+
+00:46:30.56 --> 00:46:31.99
+is captured in the data.
+
+00:46:31.99 --> 00:46:33.95
+But I think that dimension
+is really important,
+
+00:46:33.95 --> 00:46:36.24
+and it's one of the
+reasons that none of this
+
+00:46:36.24 --> 00:46:39.16
+was possible until we started
+building big enough data sets,
+
+00:46:39.16 --> 00:46:41.36
+where you had enough
+coverage of the space
+
+00:46:41.36 --> 00:46:43.52
+that you wanted to
+model in your data
+
+00:46:43.52 --> 00:46:46.46
+to be able to start
+interpolating between them.
+
+00:46:46.46 --> 00:46:46.96
+Yeah.
+
+00:46:46.96 --> 00:46:48.83
+AUDIENCE: Can you just
+clarify the difference
+
+00:46:48.83 --> 00:46:51.52
+between overfitting
+and overparameterized?
+
+00:46:51.52 --> 00:46:54.42
+SARA BEERY: Oh, yeah.
+
+00:46:54.42 --> 00:46:55.92
+So, I mean, I think
+this paper would
+
+00:46:55.92 --> 00:46:58.22
+be great to read to be
+able to really get into it.
+
+00:46:58.22 --> 00:47:00.72
+But essentially,
+the idea here is
+
+00:47:00.72 --> 00:47:02.28
+that in the previous
+literature, we
+
+00:47:02.28 --> 00:47:06.27
+said that at some point, if
+you had too many parameters,
+
+00:47:06.27 --> 00:47:09.45
+you were going to overfit and
+learn a model that actually
+
+00:47:09.45 --> 00:47:12.49
+generalized worse because based
+on the amount of data that you
+
+00:47:12.49 --> 00:47:17.01
+had, it was going to-- there's a
+classical example where you have
+
+00:47:17.01 --> 00:47:18.51
+three data points.
+
+00:47:18.51 --> 00:47:23.51
+And if you try to learn a
+12-dimensional function,
+
+00:47:23.51 --> 00:47:25.93
+it will learn something like
+this to fit those data points
+
+00:47:25.93 --> 00:47:26.51
+perfectly.
+
+00:47:26.51 --> 00:47:28.69
+But actually, it's not
+likely to generalize
+
+00:47:28.69 --> 00:47:32.17
+because it's basically
+too spiky or too peaky.
+
+00:47:32.17 --> 00:47:34.25
+So that's the idea
+of overfitting.
+
+00:47:34.25 --> 00:47:36.37
+But this idea of
+overparameterized
+
+00:47:36.37 --> 00:47:39.45
+is basically instead of saying
+underfitting and overfitting,
+
+00:47:39.45 --> 00:47:42.09
+now we're saying that the new
+paradigm is underparametrized
+
+00:47:42.09 --> 00:47:43.63
+and overparameterized.
+
+00:47:43.63 --> 00:47:45.41
+And what they're
+basically saying
+
+00:47:45.41 --> 00:47:50.37
+is that you maybe can't
+be too overparameterized,
+
+00:47:50.37 --> 00:47:53.57
+though this perspective
+is one that doesn't
+
+00:47:53.57 --> 00:47:56.01
+take into account resources.
+
+00:47:56.01 --> 00:48:00.37
+So there's many, many
+people and places and places
+
+00:48:00.37 --> 00:48:02.97
+that are at MIT, but even
+actually in this class,
+
+00:48:02.97 --> 00:48:05.24
+where we don't have
+infinite compute resources.
+
+00:48:05.24 --> 00:48:06.62
+So actually, what
+you really want
+
+00:48:06.62 --> 00:48:08.82
+is some optimal point
+on this curve where
+
+00:48:08.82 --> 00:48:12.38
+you get good performance,
+but you're not maybe
+
+00:48:12.38 --> 00:48:14.14
+using resources
+that you don't have,
+
+00:48:14.14 --> 00:48:17.46
+super, super large memory GPUs.
+
+00:48:17.46 --> 00:48:19.26
+Yeah?
+
+00:48:19.26 --> 00:48:21.10
+AUDIENCE: When you gave
+the example of using
+
+00:48:21.10 --> 00:48:24.86
+two very wide layers versus
+multiple narrow ones,
+
+00:48:24.86 --> 00:48:27.68
+[INAUDIBLE] there's
+a rule of thumb about
+
+00:48:27.68 --> 00:48:30.42
+which is better for about
+the interpretability
+
+00:48:30.42 --> 00:48:31.70
+between the two?
+
+00:48:31.70 --> 00:48:33.26
+SARA BEERY: Yeah.
+
+00:48:33.26 --> 00:48:35.10
+OK, we're definitely
+going to get
+
+00:48:35.10 --> 00:48:38.26
+into this a lot more in
+some of the later lectures,
+
+00:48:38.26 --> 00:48:44.50
+these choices between breadth
+versus depth in models.
+
+00:48:44.50 --> 00:48:47.92
+But at a very high
+level, your intuition,
+
+00:48:47.92 --> 00:48:50.58
+I think, that you're
+getting at is correct.
+
+00:48:50.58 --> 00:48:54.60
+If you have only two layers--
+
+00:48:54.60 --> 00:48:56.06
+actually, maybe
+not, because if you
+
+00:48:56.06 --> 00:48:59.08
+have two almost infinite
+parameter layers,
+
+00:48:59.08 --> 00:49:02.54
+really, really high dimensional
+space is hard to interpret.
+
+00:49:02.54 --> 00:49:06.60
+If you have lower dimensional
+space over many, many different
+
+00:49:06.60 --> 00:49:09.58
+now stacked versions
+of these layers,
+
+00:49:09.58 --> 00:49:11.14
+it's also hard to interpret.
+
+00:49:11.14 --> 00:49:14.84
+So I would say like in ecology,
+for example, people often
+
+00:49:14.84 --> 00:49:16.52
+still use just
+generative additive
+
+00:49:16.52 --> 00:49:18.57
+models of a bunch of
+different linear things
+
+00:49:18.57 --> 00:49:20.20
+because they need
+the interpretability,
+
+00:49:20.20 --> 00:49:22.68
+or they feel like they do.
+
+00:49:22.68 --> 00:49:25.92
+And anytime you get
+to larger numbers
+
+00:49:25.92 --> 00:49:29.00
+of parameters in either
+dimension, that interpretability
+
+00:49:29.00 --> 00:49:31.26
+gets more difficult.
+
+00:49:31.26 --> 00:49:32.64
+AUDIENCE: I was
+just going to add
+
+00:49:32.64 --> 00:49:38.44
+that even in, let's say OpenAI,
+it's a closely guarded secret
+
+00:49:38.44 --> 00:49:40.72
+what recipe of
+width versus depth
+
+00:49:40.72 --> 00:49:43.76
+that they use in GPT whatever.
+
+00:49:43.76 --> 00:49:46.00
+If you can come up with
+a really scientific way
+
+00:49:46.00 --> 00:49:48.24
+to answer that question,
+you could go and get
+
+00:49:48.24 --> 00:49:49.04
+a job there and--
+
+00:49:49.04 --> 00:49:50.66
+SARA BEERY: Make 7 figures.
+
+00:49:50.66 --> 00:49:51.60
+[LAUGHS]
+
+00:49:51.60 --> 00:49:52.60
+AUDIENCE: [INAUDIBLE]
+
+00:49:52.60 --> 00:49:54.52
+SARA BEERY: Yeah, so
+what Jeremy is saying is,
+
+00:49:54.52 --> 00:49:58.08
+there's no perfect prescription
+or recipe for width versus depth
+
+00:49:58.08 --> 00:49:59.52
+and what's optimal.
+
+00:49:59.52 --> 00:50:02.01
+Yeah.
+
+00:50:02.01 --> 00:50:05.41
+So the simplicity hypothesis
+in classical theory
+
+00:50:05.41 --> 00:50:08.57
+basically says that big models
+learn complicated functions
+
+00:50:08.57 --> 00:50:09.99
+and overfit the data.
+
+00:50:09.99 --> 00:50:13.45
+And the emerging theory is
+that deep networks actually
+
+00:50:13.45 --> 00:50:16.02
+learn simple functions
+that generalize.
+
+00:50:16.02 --> 00:50:18.61
+And we're going to talk about
+this a lot more in a theoretical
+
+00:50:18.61 --> 00:50:21.51
+and a more experimental
+lecture around generalization,
+
+00:50:21.51 --> 00:50:24.57
+both in and out of distribution.
+
+00:50:24.57 --> 00:50:26.49
+So again, what I've
+expected you to see
+
+00:50:26.49 --> 00:50:29.97
+before-- softmax,
+cross-entropy loss-- basically,
+
+00:50:29.97 --> 00:50:32.22
+we have this model
+that we're trying
+
+00:50:32.22 --> 00:50:34.43
+to use to learn to classify
+something like clownfish.
+
+00:50:34.43 --> 00:50:37.77
+And we assume that we've seen
+some of these really basic loss
+
+00:50:37.77 --> 00:50:39.07
+functions that we use for this.
+
+00:50:39.07 --> 00:50:43.21
+So for example, if you have
+this as your last layer,
+
+00:50:43.21 --> 00:50:45.01
+and now you have some
+set of categories
+
+00:50:45.01 --> 00:50:47.37
+you're trying to learn
+to categorize over,
+
+00:50:47.37 --> 00:50:49.77
+the simple version of this
+is you take the argmax,
+
+00:50:49.77 --> 00:50:52.49
+and you say, OK, well, the
+thing that's darkest on here
+
+00:50:52.49 --> 00:50:54.45
+is clownfish.
+
+00:50:54.45 --> 00:50:57.13
+And then the loss that
+you would calculate
+
+00:50:57.13 --> 00:51:01.60
+is, OK, the actual correct
+ground truth label is clownfish,
+
+00:51:01.60 --> 00:51:04.46
+and then the error between those
+two, in this case, is zero.
+
+00:51:04.46 --> 00:51:05.40
+So it's small.
+
+00:51:05.40 --> 00:51:08.86
+So you've gotten the
+correct prediction.
+
+00:51:08.86 --> 00:51:12.30
+And then maybe, actually,
+the real ground truth label
+
+00:51:12.30 --> 00:51:14.71
+is grizzly bear, and
+you've said clownfish.
+
+00:51:14.71 --> 00:51:16.76
+Now what you'd want is
+for your loss to be large.
+
+00:51:16.76 --> 00:51:18.58
+So you want some
+loss function that
+
+00:51:18.58 --> 00:51:21.34
+does a good job of punishing
+you when you're wrong
+
+00:51:21.34 --> 00:51:24.66
+and not punishing you
+when you're right.
+
+00:51:24.66 --> 00:51:26.62
+And the way we
+actually do this often
+
+00:51:26.62 --> 00:51:31.32
+is if you assume the net output
+is some normalized vector,
+
+00:51:31.32 --> 00:51:33.38
+then you can think of
+this as a probability
+
+00:51:33.38 --> 00:51:37.30
+distribution over different
+possible object classes.
+
+00:51:37.30 --> 00:51:39.72
+And so what you want this
+loss function on the right,
+
+00:51:39.72 --> 00:51:42.02
+this is called
+cross-entropy loss.
+
+00:51:42.02 --> 00:51:43.98
+This essentially
+indicates the distance
+
+00:51:43.98 --> 00:51:47.74
+between what the model believes
+the output distribution should
+
+00:51:47.74 --> 00:51:50.76
+be and what the input
+distribution actually is,
+
+00:51:50.76 --> 00:51:53.84
+which in this case is what
+we call a one hot encoding,
+
+00:51:53.84 --> 00:51:56.86
+or essentially a vector that's 0
+everywhere except for the place
+
+00:51:56.86 --> 00:51:59.23
+where it's correct,
+where it's 1.
+
+00:51:59.23 --> 00:52:01.28
+And so essentially, it's
+just telling the network
+
+00:52:01.28 --> 00:52:04.40
+to maximize the probability
+of the training data, which
+
+00:52:04.40 --> 00:52:07.20
+forces the output to be a
+reasonably good probability
+
+00:52:07.20 --> 00:52:09.94
+model of the object
+class, given the image,
+
+00:52:09.94 --> 00:52:12.28
+assuming you have
+enough training data.
+
+00:52:12.28 --> 00:52:15.14
+So what this looks like in
+practice, you say clownfish,
+
+00:52:15.14 --> 00:52:17.96
+the ground truth
+label is clownfish.
+
+00:52:17.96 --> 00:52:22.60
+Maybe this is your
+prediction, so now the score
+
+00:52:22.60 --> 00:52:24.72
+is basically saying,
+this is how much better
+
+00:52:24.72 --> 00:52:27.04
+you could have done--
+
+00:52:27.04 --> 00:52:28.74
+how much better you
+could have done,
+
+00:52:28.74 --> 00:52:31.76
+which is the difference between
+the amount of probability
+
+00:52:31.76 --> 00:52:33.00
+you gave the class clownfish.
+
+00:52:33.00 --> 00:52:34.42
+I'm putting probability
+in quotes here.
+
+00:52:34.42 --> 00:52:35.88
+It's super important to
+know that these are not
+
+00:52:35.88 --> 00:52:36.90
+true probabilities.
+
+00:52:36.90 --> 00:52:39.36
+They're scores.
+
+00:52:39.36 --> 00:52:42.36
+And then that red
+is the dimension
+
+00:52:42.36 --> 00:52:43.47
+that you could do better.
+
+00:52:43.47 --> 00:52:45.64
+And that's telling you the
+direction of the gradient
+
+00:52:45.64 --> 00:52:47.96
+you want to go in.
+
+00:52:47.96 --> 00:52:50.78
+So maybe grizzly bear,
+you got it correct.
+
+00:52:50.78 --> 00:52:51.62
+It's grizzly bear.
+
+00:52:51.62 --> 00:52:58.00
+Now the amount that's left
+over is small versus actually
+
+00:52:58.00 --> 00:53:02.48
+if it's chameleon, and
+you're saying iguana.
+
+00:53:02.48 --> 00:53:04.07
+Essentially, this
+thing is normalized,
+
+00:53:04.07 --> 00:53:06.33
+so if you put a lot more
+probability on one thing, then
+
+00:53:06.33 --> 00:53:07.78
+the correct answer,
+then you end up
+
+00:53:07.78 --> 00:53:10.33
+with a much smaller amount
+that now you're looking
+
+00:53:10.33 --> 00:53:12.81
+at the difference between it.
+
+00:53:12.81 --> 00:53:16.17
+And basically, the idea with
+all of this in deep learning
+
+00:53:16.17 --> 00:53:18.73
+is you're taking all
+these different weights
+
+00:53:18.73 --> 00:53:23.17
+in your massive model, and then
+you're fiddling around with them
+
+00:53:23.17 --> 00:53:25.17
+until you match the
+desired output for all
+
+00:53:25.17 --> 00:53:26.41
+your training data.
+
+00:53:26.41 --> 00:53:29.65
+You're basically just
+wiggling around all
+
+00:53:29.65 --> 00:53:30.81
+these different weights.
+
+00:53:30.81 --> 00:53:33.39
+So you're going through
+your training data,
+
+00:53:33.39 --> 00:53:36.25
+you're predicting something,
+you're calculating a loss,
+
+00:53:36.25 --> 00:53:38.99
+and you're doing this for
+many different data samples.
+
+00:53:38.99 --> 00:53:40.37
+And you're doing
+it over and over
+
+00:53:40.37 --> 00:53:42.33
+and over again until the
+model gets everything
+
+00:53:42.33 --> 00:53:46.93
+right, or as close to
+everything right as possible.
+
+00:53:46.93 --> 00:53:48.81
+We also expect that
+you've seen some amount
+
+00:53:48.81 --> 00:53:52.37
+of parallel processing and the
+idea of tensors before this.
+
+00:53:52.37 --> 00:53:54.57
+So this is the idea that
+a lot of this stuff,
+
+00:53:54.57 --> 00:53:56.95
+because it's repeated
+calculations,
+
+00:53:56.95 --> 00:53:58.31
+you can be done in batch.
+
+00:53:58.31 --> 00:54:01.43
+So each of these individual
+losses for the individual data
+
+00:54:01.43 --> 00:54:03.72
+points, well, it's all
+going to be summed anyway.
+
+00:54:03.72 --> 00:54:05.43
+So you can do it in
+parallel, and now you
+
+00:54:05.43 --> 00:54:09.95
+can take these batches and more
+efficiently calculate that sum.
+
+00:54:09.95 --> 00:54:13.95
+And so look, you take the same
+layer for all three of these,
+
+00:54:13.95 --> 00:54:16.31
+you can stack them,
+and now essentially you
+
+00:54:16.31 --> 00:54:20.47
+get this matrix that's
+features multiplied by images.
+
+00:54:20.47 --> 00:54:22.63
+And so that's what
+your tensors are.
+
+00:54:22.63 --> 00:54:24.55
+They're these
+multi-dimensional arrays,
+
+00:54:24.55 --> 00:54:26.91
+and every single layer
+is some representation
+
+00:54:26.91 --> 00:54:29.23
+of the input data.
+
+00:54:29.23 --> 00:54:31.09
+And actually,
+everything is a tensor.
+
+00:54:31.09 --> 00:54:33.47
+A tensor is just a
+multi-dimensional matrix.
+
+00:54:33.47 --> 00:54:36.99
+So you can say, OK, here's our
+mathematical representation
+
+00:54:36.99 --> 00:54:38.19
+of this model.
+
+00:54:38.19 --> 00:54:40.81
+But you can also just
+represent it this way.
+
+00:54:40.81 --> 00:54:44.65
+You have these vectors of
+your different input values,
+
+00:54:44.65 --> 00:54:46.33
+and now you have
+your batch dimension,
+
+00:54:46.33 --> 00:54:49.61
+which is now this vertical
+stacking of all those layers.
+
+00:54:49.61 --> 00:54:52.07
+And now you multiply that
+by your weights matrix,
+
+00:54:52.07 --> 00:54:53.79
+and you get out your
+output, and then
+
+00:54:53.79 --> 00:54:55.81
+you run that through a
+pointwise non-linearity,
+
+00:54:55.81 --> 00:54:58.46
+and then again, just another
+matrix multiplication.
+
+00:54:58.46 --> 00:55:00.48
+And then you get your
+output z2, and then you
+
+00:55:00.48 --> 00:55:02.32
+take that non-linearity,
+and you get y.
+
+00:55:02.32 --> 00:55:05.48
+So this is why
+the fact that GPUs
+
+00:55:05.48 --> 00:55:07.48
+can do so many
+multiplications in parallel
+
+00:55:07.48 --> 00:55:10.64
+was important, because we can
+rewrite all of these models
+
+00:55:10.64 --> 00:55:13.14
+as just essentially
+sets of multiplications.
+
+00:55:13.14 --> 00:55:15.04
+And we'll go into this
+in a lot more detail
+
+00:55:15.04 --> 00:55:16.49
+as well in the future.
+
+00:55:16.49 --> 00:55:18.24
+So what we're going
+to cover in this class
+
+00:55:18.24 --> 00:55:20.74
+is how deep networks
+represent data.
+
+00:55:20.74 --> 00:55:29.12
+So essentially, it's
+this idea, where
+
+00:55:29.12 --> 00:55:33.28
+deep networks are a more compact
+way of representing knowledge
+
+00:55:33.28 --> 00:55:34.40
+in data.
+
+00:55:34.40 --> 00:55:39.36
+And previous methods we saw
+were more like lookup tables.
+
+00:55:39.36 --> 00:55:41.16
+But there's other
+and maybe better ways
+
+00:55:41.16 --> 00:55:43.40
+to learn a mapping
+between input and output
+
+00:55:43.40 --> 00:55:47.64
+that basically assume that there
+are these lower-level building
+
+00:55:47.64 --> 00:55:50.88
+blocks that are useful for many
+different possible downstream
+
+00:55:50.88 --> 00:55:51.68
+tasks.
+
+00:55:51.68 --> 00:55:53.88
+So one nice example
+is the idea of trying
+
+00:55:53.88 --> 00:55:56.29
+to learn a classifier
+for the letter T.
+
+00:55:56.29 --> 00:55:58.47
+So if you want to learn
+to classify the letter T,
+
+00:55:58.47 --> 00:56:00.76
+you could try to build a
+classifier just for the letter
+
+00:56:00.76 --> 00:56:03.69
+T. Or you could take a
+classifier that classifies
+
+00:56:03.69 --> 00:56:06.45
+lines, and you could
+say, OK, here's a line,
+
+00:56:06.45 --> 00:56:09.09
+and then you could rotate, have
+a rotation of that classifier,
+
+00:56:09.09 --> 00:56:10.53
+and you'd say, here's a line.
+
+00:56:10.53 --> 00:56:13.41
+And now all you have to do is
+understand the connection point
+
+00:56:13.41 --> 00:56:14.55
+between these two lines.
+
+00:56:14.55 --> 00:56:19.77
+So that line classifier is
+reusable in some combination
+
+00:56:19.77 --> 00:56:21.39
+to get a T classifier.
+
+00:56:21.39 --> 00:56:22.83
+And that's the basic idea here.
+
+00:56:22.83 --> 00:56:27.55
+And actually in
+this post hoc way,
+
+00:56:27.55 --> 00:56:29.91
+we've analyzed what
+is learned in layers
+
+00:56:29.91 --> 00:56:31.79
+of things like convolutional
+neural networks.
+
+00:56:31.79 --> 00:56:34.69
+And we do see that you'll
+get low-level representations
+
+00:56:34.69 --> 00:56:35.87
+in the earlier layers.
+
+00:56:35.87 --> 00:56:38.33
+Then they get combined
+into more and more complex
+
+00:56:38.33 --> 00:56:42.29
+representations in
+those later layers.
+
+00:56:42.29 --> 00:56:44.15
+And you can actually
+see this as well.
+
+00:56:44.15 --> 00:56:48.17
+If you take an input
+image, and you take those,
+
+00:56:48.17 --> 00:56:52.65
+and you cluster them in some
+low-level representation
+
+00:56:52.65 --> 00:56:56.00
+of the space for each layer, the
+layers earlier on in the network
+
+00:56:56.00 --> 00:56:58.71
+are not going to cluster well by
+category, because they're really
+
+00:56:58.71 --> 00:57:00.35
+just categorizing
+things like, does it
+
+00:57:00.35 --> 00:57:04.55
+have directional orientations
+of light and dark gradients
+
+00:57:04.55 --> 00:57:05.71
+in the pixels?
+
+00:57:05.71 --> 00:57:08.21
+But actually, when you get
+towards the end of the network,
+
+00:57:08.21 --> 00:57:09.91
+it's learning more
+concepts, and that's
+
+00:57:09.91 --> 00:57:12.32
+where you start getting these
+clusters of different things
+
+00:57:12.32 --> 00:57:14.55
+like fish.
+
+00:57:14.55 --> 00:57:19.75
+And we will talk about actually
+how that representation learns
+
+00:57:19.75 --> 00:57:23.39
+and is structured through space
+in a bunch of different lectures
+
+00:57:23.39 --> 00:57:25.43
+on representation learning,
+where we talk about
+
+00:57:25.43 --> 00:57:29.65
+reconstruction,
+similarity, and theory.
+
+00:57:29.65 --> 00:57:32.03
+We're also going to cover
+generative models going forward
+
+00:57:32.03 --> 00:57:33.35
+in the class.
+
+00:57:33.35 --> 00:57:35.67
+And this is things like
+text-based and image-based
+
+00:57:35.67 --> 00:57:37.07
+generation.
+
+00:57:37.07 --> 00:57:39.47
+And we'll cover basics,
+representations,
+
+00:57:39.47 --> 00:57:42.67
+and conditional models.
+
+00:57:42.67 --> 00:57:44.59
+And then we're going
+to cover in this class
+
+00:57:44.59 --> 00:57:46.87
+how to think about
+weight reuse and some
+
+00:57:46.87 --> 00:57:48.67
+of the efficiencies
+in terms of training
+
+00:57:48.67 --> 00:57:50.63
+if you're able to
+reuse components
+
+00:57:50.63 --> 00:57:53.80
+of previously trained models.
+
+00:57:53.80 --> 00:57:57.38
+So here, again, this
+idea that, all right,
+
+00:57:57.38 --> 00:58:02.32
+well, you learned this thing to
+categorize pictures of animals,
+
+00:58:02.32 --> 00:58:04.56
+and now maybe you
+want to categorize
+
+00:58:04.56 --> 00:58:06.62
+some sort of satellite
+imagery, well,
+
+00:58:06.62 --> 00:58:10.36
+actually, a lot of those
+initial components about lines
+
+00:58:10.36 --> 00:58:13.00
+and orientations and
+structures, those
+
+00:58:13.00 --> 00:58:14.62
+are useful for both of these.
+
+00:58:14.62 --> 00:58:19.32
+So what do we really need to
+learn from scratch versus what
+
+00:58:19.32 --> 00:58:22.16
+is generally useful in terms
+of the representations that
+
+00:58:22.16 --> 00:58:24.34
+are learned?
+
+00:58:24.34 --> 00:58:25.76
+And this is really
+valuable if you
+
+00:58:25.76 --> 00:58:28.18
+don't have big data
+or big compute,
+
+00:58:28.18 --> 00:58:31.24
+if you can pre-generate
+representations that then you
+
+00:58:31.24 --> 00:58:34.32
+can learn on top of without
+needing to learn everything
+
+00:58:34.32 --> 00:58:36.92
+from scratch.
+
+00:58:36.92 --> 00:58:39.64
+And so we'll get
+into whether or not
+
+00:58:39.64 --> 00:58:42.38
+these things are
+generalizable or transferable
+
+00:58:42.38 --> 00:58:43.88
+in these transfer
+learning lectures,
+
+00:58:43.88 --> 00:58:46.40
+where we talk about
+models and data.
+
+00:58:46.40 --> 00:58:49.80
+And then finally, we'll
+talk about scaling.
+
+00:58:49.80 --> 00:58:53.89
+So when you think about
+the scale of a brain,
+
+00:58:53.89 --> 00:58:57.83
+something like this little
+worm only has 302 neurons,
+
+00:58:57.83 --> 00:59:02.65
+so you can think of that
+as 302 different values
+
+00:59:02.65 --> 00:59:03.85
+in its neural network.
+
+00:59:03.85 --> 00:59:06.57
+A fruit fly is 15,000.
+
+00:59:06.57 --> 00:59:09.97
+Human beings have
+100 billion, roughly.
+
+00:59:09.97 --> 00:59:13.11
+Elephants have 250 billion
+neurons in their brains.
+
+00:59:13.11 --> 00:59:14.57
+I work with elephants a lot.
+
+00:59:14.57 --> 00:59:15.59
+They're amazing.
+
+00:59:18.53 --> 00:59:21.67
+And we'll talk about
+scale and deep learning
+
+00:59:21.67 --> 00:59:23.05
+and what this
+means, and actually
+
+00:59:23.05 --> 00:59:24.45
+get into some of the
+really great questions
+
+00:59:24.45 --> 00:59:26.13
+that different people
+asked in terms of,
+
+00:59:26.13 --> 00:59:30.21
+how does maybe scaling rules
+change when you're thinking
+
+00:59:30.21 --> 00:59:32.47
+about optimization, what
+are the laws of scaling,
+
+00:59:32.47 --> 00:59:33.93
+and how do we think
+about something
+
+00:59:33.93 --> 00:59:38.69
+like automatically learning
+how to best optimize a model?
+
+00:59:38.69 --> 00:59:39.73
+Great.
+
+00:59:39.73 --> 00:59:43.29
+So I tried to cover
+today how we got
+
+00:59:43.29 --> 00:59:46.79
+where we are today, basically
+just honestly mostly joking,
+
+00:59:46.79 --> 00:59:49.81
+but definitely a brief history
+of these fluctuation and hype
+
+00:59:49.81 --> 00:59:50.89
+cycles.
+
+00:59:50.89 --> 00:59:53.95
+I would say that
+everyone's pretty clear
+
+00:59:53.95 --> 00:59:58.67
+that we're currently in a really
+hypey part of the hype cycle.
+
+00:59:58.67 --> 01:00:03.61
+What we expected you maybe saw
+before and also very high level,
+
+01:00:03.61 --> 01:00:06.67
+some of the things we're
+going to cover in this class.
+
+01:00:06.67 --> 01:00:11.11
+So I'm happy to, if anyone
+has any final questions--
+
+01:00:11.11 --> 01:00:12.19
+yeah.
+
+01:00:12.19 --> 01:00:13.56
+AUDIENCE: Slightly
+underweighted,
+
+01:00:13.56 --> 01:00:17.11
+but would you be
+willing to share
+
+01:00:17.11 --> 01:00:19.93
+an estimate for how many data
+it will take this first lecture
+
+01:00:19.93 --> 01:00:22.14
+to get a million views?
+
+01:00:22.14 --> 01:00:24.19
+SARA BEERY: How long it'll
+take the first lecture
+
+01:00:24.19 --> 01:00:25.18
+to get how many views?
+
+01:00:25.18 --> 01:00:26.43
+AUDIENCE: Let's say a million.
+
+01:00:26.43 --> 01:00:28.15
+SARA BEERY: Well, I mean,
+honestly, the intro lecture
+
+01:00:28.15 --> 01:00:29.99
+is probably going to
+be the least watched
+
+01:00:29.99 --> 01:00:32.91
+of all the lectures
+[LAUGHS] because it's just
+
+01:00:32.91 --> 01:00:34.49
+a bunch of course logistics.
+
+01:00:34.49 --> 01:00:36.19
+We might even edit those out.
+
+01:00:36.19 --> 01:00:37.73
+But great question.
+
+01:00:37.73 --> 01:00:39.54
+I have no idea.
+

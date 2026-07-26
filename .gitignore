@@ -7,3 +7,6 @@ checksums.txt
 *.vtt
 *.srt
 *.txt
+!docs/**/*.vtt
+!docs/**/*.srt
+!docs/**/*.txt
