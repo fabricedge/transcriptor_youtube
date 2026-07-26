@@ -1,0 +1,4 @@
+.venv/
+*.vtt
+*.srt
+transcripts/
