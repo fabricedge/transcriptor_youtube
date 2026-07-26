@@ -74,6 +74,10 @@ Transcribe using cookies (for age-restricted videos or to bypass rate limits):
 yt-transcribe-windows-amd64.exe --cookies cookies.txt "https://www.youtube.com/playlist?list=PLabc123"
 ```
 
+## Use cases
+
+- [MIT OpenCourseWare — 6.006 Introduction to Algorithms](docs/mit-opencourseware.md) — transcribe an entire MIT course playlist with full license compliance, including a real example transcript.
+
 ## Windows
 
 ### Run
