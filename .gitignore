@@ -2,6 +2,8 @@
 test_out*/
 transcripts/
 yt-transcribe
+yt-transcribe-*
+checksums.txt
 *.vtt
 *.srt
 *.txt
