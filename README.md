@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Download transcripts/subtitles for every video in a YouTube playlist.
+Download transcripts/subtitles from a YouTube playlist or a single video.
 
 A single static binary — no Python, no API key, no external dependencies.
 
@@ -29,8 +29,10 @@ Download the pre-built binary for your platform from the [Releases page](https:/
 ## Usage
 
 ```bash
-yt-transcribe [flags] <playlist-url>
+yt-transcribe [flags] <url>
 ```
+
+Accepts a playlist URL, a single video URL, or a bare video/playlist ID.
 
 ### Flags
 
@@ -52,6 +54,16 @@ Transcribe a playlist in English (VTT format):
 
 ```cmd
 yt-transcribe-windows-amd64.exe "https://www.youtube.com/playlist?list=PLabc123"
+```
+
+Transcribe a single video:
+
+```bash
+./yt-transcribe "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+```
+
+```cmd
+yt-transcribe-windows-amd64.exe "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 ```
 
 Transcribe in Portuguese as SRT:
@@ -111,7 +123,7 @@ yt-transcribe-windows-amd64.exe "https://www.youtube.com/playlist?list=PLabc123"
 
 ## How it works
 
-1. Fetches the playlist RSS feed (`youtube.com/feeds/videos.xml?playlist_id=...`) to list all video IDs.
+1. If given a playlist URL, fetches the RSS feed to list video IDs. If given a single video URL, uses it directly.
 2. For each video, fetches the transcript via YouTube's InnerTube API using the `ANDROID`/`IOS` client (bypasses pot-token restrictions).
 3. Saves each transcript as a timed subtitle file.
 
@@ -141,6 +153,7 @@ The video may not have captions in the requested language. Try a different langu
 
 ## Limitations
 
+- Single videos and playlists are both supported.
 - Playlists are limited to the first ~50 videos returned by the RSS feed.
 - Age-restricted videos may require cookies.
 - Depends on YouTube's internal API — may break if YouTube changes their endpoints.
