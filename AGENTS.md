@@ -23,12 +23,10 @@ go vet ./...
 | `playlist.go` | Fetches playlist RSS feed, extracts video IDs |
 | `transcript.go` | Wraps `rapha30/yt-youtube-transcript` for InnerTube fetching |
 | `formatter.go` | Output formatters (VTT, SRT, TXT) |
-| `web/` | Paid transcription service (Bun + Hono + SQLite + Stripe Checkout); runs the Go binary as subprocess |
 
-## web/ service
+## Related repo
 
-- `bun install`, then `bun run src/index.ts` (in `web/`); tests: `bun test`, `bun run typecheck`
-- Reads config from env — see `web/README.md`
+The paid web service that runs this CLI as a subprocess lives in `fabricedge/yt-transcribe-web` (Bundle: CLI Go + Bun/Hono/SQLite/Stripe).
 
 ## Key Library
 

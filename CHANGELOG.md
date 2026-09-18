@@ -4,8 +4,8 @@
 
 ### Added
 
-- **Auto-detect subtitle language** — `--lang` is now optional; an empty value picks the video's original language (auto-generated ASR track, else the first available track).
-- Paid transcription web service in `web/` (Bun + Hono + Stripe Checkout): pastes a video/playlist URL, pays, and downloads VTT/SRT/TXT — includes a Docker image and compose setup.
+- Auto-detect subtitle language — no `--lang` needed; picks the video's original language (ASR track, else first available track).
+- The paid transcription web service moved to its own repo: [`fabricedge/yt-transcribe-web`](https://github.com/fabricedge/yt-transcribe-web) (Bun + Hono + Stripe Checkout, CLI Go bundled).
 
 ## 2.0.1 — 2026-07-26
 
