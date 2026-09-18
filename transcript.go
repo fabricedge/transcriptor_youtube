@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/rapha30/yt-youtube-transcript/transcript"
@@ -16,14 +17,17 @@ func newHTTPClient(cookieFile string) *http.Client {
 }
 
 func fetchTranscript(ctx context.Context, client *http.Client, videoID, lang string) (*transcript.Result, error) {
-	opts := transcript.Options{
-		Lang:   lang,
-		Client: client,
-	}
-
-	result, err := transcript.Fetch(ctx, videoID, opts)
+	result, err := transcript.Fetch(ctx, videoID, transcript.Options{Lang: lang, Client: client})
 	if err != nil {
-		return nil, fmt.Errorf("fetch transcript: %w", err)
+		if base := baseLang(lang); base != lang {
+			retry, retryErr := transcript.Fetch(ctx, videoID, transcript.Options{Lang: base, Client: client})
+			if retryErr == nil {
+				result, err = retry, nil
+			}
+		}
+		if err != nil {
+			return nil, fmt.Errorf("fetch transcript: %w", err)
+		}
 	}
 
 	if len(result.Segments) == 0 {
@@ -31,4 +35,11 @@ func fetchTranscript(ctx context.Context, client *http.Client, videoID, lang str
 	}
 
 	return result, nil
+}
+
+func baseLang(lang string) string {
+	if i := strings.IndexByte(lang, '-'); i >= 0 {
+		return lang[:i]
+	}
+	return lang
 }
