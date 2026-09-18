@@ -63,7 +63,7 @@ export function fmtPrice(cents: number): string {
 export function orderPage(order: Order, readyFilenames: string[] = []): Response {
   const kindText = order.kind === "playlist" ? `playlist · ${order.videoCount} vídeos` : "vídeo único"
   const header = `<h1>Transcrição do YouTube</h1>
-<p class="muted">Pedido <code>${esc(order.id)}</code> · ${kindText} · ${esc(order.lang)} · ${order.format.toUpperCase()} · ${fmtPrice(order.amountCents)}</p>`
+<p class="muted">Pedido <code>${esc(order.id)}</code> · ${kindText} · ${esc(order.lang || "auto")} · ${order.format.toUpperCase()} · ${fmtPrice(order.amountCents)}</p>`
   return layout(
     `Pedido ${order.id}`,
     `${header}${statusBody(order, readyFilenames)}`,

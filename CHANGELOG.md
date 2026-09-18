@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1.0 — 2026-09-18
+
+### Added
+
+- **Auto-detect subtitle language** — `--lang` is now optional; an empty value picks the video's original language (auto-generated ASR track, else the first available track).
+- Paid transcription web service in `web/` (Bun + Hono + Stripe Checkout): pastes a video/playlist URL, pays, and downloads VTT/SRT/TXT — includes a Docker image and compose setup.
+
 ## 2.0.1 — 2026-07-26
 
 ### Added

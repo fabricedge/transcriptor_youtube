@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"strings"
 	"testing"
+
+	"github.com/rapha30/yt-youtube-transcript/transcript"
 )
 
 type fakeTransport struct {
@@ -96,5 +98,65 @@ func TestFetchTranscriptPrefersExactLanguage(t *testing.T) {
 	}
 	if res.Lang != "pt-BR" || res.Track.LanguageCode != "pt-BR" {
 		t.Errorf("lang = %q / track = %q; want exact pt-BR", res.Lang, res.Track.LanguageCode)
+	}
+}
+
+func TestAutoLangPrefersAsrTrack(t *testing.T) {
+	cases := []struct {
+		name   string
+		tracks []transcript.Track
+		want   string
+	}{
+		{
+			name: "asr wins over manual",
+			tracks: []transcript.Track{
+				{LanguageCode: "en", Kind: ""},
+				{LanguageCode: "pt", Kind: "asr"},
+			},
+			want: "pt",
+		},
+		{
+			name: "first manual when no asr",
+			tracks: []transcript.Track{
+				{LanguageCode: "pt-BR", Kind: ""},
+				{LanguageCode: "en", Kind: ""},
+			},
+			want: "pt-BR",
+		},
+		{name: "empty when no tracks", want: ""},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			if got := autoLang(tc.tracks); got != tc.want {
+				t.Errorf("autoLang() = %q; want %q", got, tc.want)
+			}
+		})
+	}
+}
+
+func TestFetchTranscriptAutoSelectsOriginalLanguage(t *testing.T) {
+	const tracks = `{"baseUrl":"https://cc.test/en?fmt=srv3",` +
+		`"name":{"simpleText":"English"},` +
+		`"languageCode":"en","kind":"","isTranslatable":true},` +
+		`{"baseUrl":"https://cc.test/pt?fmt=srv3",` +
+		`"name":{"simpleText":"Portuguese (auto-generated)"},` +
+		`"languageCode":"pt","kind":"asr","isTranslatable":true}`
+
+	client := clientWith(func(r *http.Request) (*http.Response, error) {
+		switch {
+		case isPlayer(r):
+			return httpResp(200, playerWith(tracks)), nil
+		case r.URL.Host == "cc.test":
+			return httpResp(200, json3Body), nil
+		}
+		return httpResp(404, ""), nil
+	})
+
+	res, err := fetchTranscript(context.Background(), client, "abc12345678", "")
+	if err != nil {
+		t.Fatalf("fetchTranscript error: %v", err)
+	}
+	if res.Lang != "pt" || res.Track.LanguageCode != "pt" {
+		t.Errorf("lang = %q / track = %q; want auto pt", res.Lang, res.Track.LanguageCode)
 	}
 }

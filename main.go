@@ -20,7 +20,7 @@ func main() {
 		cookies string
 	)
 
-	flag.StringVar(&lang, "lang", "en", "Subtitle language code")
+	flag.StringVar(&lang, "lang", "", "Subtitle language code (empty = auto-detect original language)")
 	flag.StringVar(&outDir, "out", "transcripts", "Output directory")
 	flag.StringVar(&format, "format", "vtt", "Output format (vtt, srt, txt)")
 	flag.StringVar(&cookies, "cookies", "", "Path to cookies.txt file")
@@ -67,7 +67,7 @@ func main() {
 
 	fmt.Printf("Found %d video(s)\n", len(videoIDs))
 	fmt.Printf("Output:   %s/\n", outDir)
-	fmt.Printf("Language: %s\n", lang)
+	fmt.Printf("Language: %s\n", displayLang(lang))
 	fmt.Printf("Format:   %s\n", format)
 	fmt.Println("")
 
@@ -88,6 +88,12 @@ func main() {
 			continue
 		}
 
+		if detected := detectedLang(lang, result.Lang); detected != "" {
+			fmt.Printf("OK (auto: %s)\n", detected)
+		} else {
+			fmt.Println("OK")
+		}
+
 		ext := "." + format
 		if format == "txt" {
 			ext = ".txt"
@@ -98,11 +104,24 @@ func main() {
 			fmt.Printf("FAILED writing (%v)\n", err)
 			continue
 		}
-		fmt.Println("OK")
 	}
 
 	fmt.Printf("\nDone — %d processed, %d failed\n", count, failed)
 	fmt.Printf("Transcripts saved in: %s/\n", outDir)
+}
+
+func displayLang(lang string) string {
+	if lang == "" {
+		return "auto (detectado)"
+	}
+	return lang
+}
+
+func detectedLang(requested, used string) string {
+	if requested == "" && used != "" {
+		return used
+	}
+	return ""
 }
 
 func extractIDs(s string) (playlistID, videoID string) {

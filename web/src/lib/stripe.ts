@@ -31,7 +31,7 @@ export async function createCheckoutSession(o: {
               order.kind === "playlist"
                 ? `Transcrição de playlist (${order.videoCount} vídeos)`
                 : "Transcrição de vídeo do YouTube",
-            description: order.lang === "en" ? "English (auto-generated)" : order.lang,
+            description: order.lang === "" ? "Idioma original (auto-detectado)" : order.lang === "en" ? "English (auto-generated)" : order.lang,
           },
         },
       },

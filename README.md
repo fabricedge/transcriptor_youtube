@@ -38,7 +38,7 @@ Accepts a playlist URL, a single video URL, or a bare video/playlist ID — no q
 
 | Flag | Default | Description |
 |---|---|---|
-| `--lang` | `en` | Subtitle language code |
+| `--lang` | `""` (auto) | Subtitle language code; empty auto-detects the original language |
 | `--out` | `transcripts` | Output directory |
 | `--format` | `vtt` | Output format: `vtt`, `srt`, `txt` |
 | `--cookies` | — | Path to cookies.txt file |
@@ -46,7 +46,7 @@ Accepts a playlist URL, a single video URL, or a bare video/playlist ID — no q
 
 ### Examples
 
-Transcribe a playlist in English (VTT format):
+Transcribe a playlist in its original language (VTT format). Auto-detects the language — no `--lang` needed:
 
 ```bash
 ./yt-transcribe "https://www.youtube.com/playlist?list=PLabc123"

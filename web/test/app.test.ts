@@ -85,6 +85,21 @@ describe("app", () => {
     expect(await res.text()).toContain("Formato inválido")
   })
 
+  test("auto language (empty lang) is accepted and defaulted", async () => {
+    const holder: { order: Order | null } = { order: null }
+    const app = createApp(
+      mkDeps({
+        createCheckout: async (order) => {
+          holder.order = order
+          return { sessionId: "cs_a", url: "https://pay.test/s" }
+        },
+      }),
+    )
+    const res = await checkout(app, VIDEO_URL, "")
+    expect(res.status).toBe(303)
+    expect(holder.order?.lang).toBe("")
+  })
+
   test("rate limiter blocks repeated submissions", async () => {
     let called = 0
     const app = createApp(

@@ -23,6 +23,7 @@ export function priceCents(count: number): number {
 }
 
 export const langs: { code: string; label: string }[] = [
+  { code: "", label: "Auto (idioma original do vídeo)" },
   { code: "en", label: "English" },
   { code: "pt", label: "Portuguese (auto)" },
   { code: "pt-BR", label: "Portuguese (Brazil)" },

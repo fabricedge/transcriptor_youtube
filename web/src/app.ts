@@ -70,7 +70,7 @@ export function createApp(deps: AppDeps): Hono {
 
     const form = await c.req.parseBody()
     const url = String(form.url ?? "").trim()
-    const lang = String(form.lang ?? "en")
+    const lang = String(form.lang ?? "")
     const format = String(form.format ?? "txt")
 
     if (!isFormat(format)) return homePage({ error: "Formato inválido." })
